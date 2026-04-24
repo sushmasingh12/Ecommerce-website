@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../../features/cart/hooks/useCart';
-import ProfileDropdown from './ProfileDropdown';
 import { NAV_DATA } from '../data/navigationData';
+import AccountDropdown from '../../features/account/components/AccountDropdown';
 
 const Header = ({ openSidebar }) => {
   const { toggleDrawer, count } = useCart();
@@ -84,7 +84,7 @@ const Header = ({ openSidebar }) => {
                 <span className="text-[9px] hidden md:block mt-0.5 font-medium">Account</span>
               </button>
               <div className="absolute right-0 top-full mt-2">
-                <ProfileDropdown isOpen={isProfileOpen} closeDropdown={() => setIsProfileOpen(false)} />
+                <AccountDropdown isOpen={isProfileOpen} closeDropdown={() => setIsProfileOpen(false)} />
               </div>
             </div>
           </div>
@@ -103,9 +103,8 @@ const Header = ({ openSidebar }) => {
             const isActive = location.pathname === category.path || location.pathname.startsWith(`${category.path}/`);
             return (
               <Link key={category.name} to={category.path}
-                className={`text-xs font-medium whitespace-nowrap transition-colors pb-0.5 border-b-2 flex-shrink-0 ${
-                  isActive ? 'text-[#FF9F00] border-[#FF9F00]' : 'text-white/80 hover:text-white border-transparent'
-                }`}>
+                className={`text-xs font-medium whitespace-nowrap transition-colors pb-0.5 border-b-2 flex-shrink-0 ${isActive ? 'text-[#FF9F00] border-[#FF9F00]' : 'text-white/80 hover:text-white border-transparent'
+                  }`}>
                 {category.name}
               </Link>
             );

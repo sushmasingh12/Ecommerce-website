@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const DEALS = [
   { label: 'Fashion Deals', discount: 'Up to 60% Off', link: '/women', img: 'https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&w=400', color: 'tertiary' },
   { label: "Men's Style", discount: 'Min 40% Off', link: '/men', img: 'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=400', color: '#60A5FA' },
-  { label: 'Footwear', discount: 'Flat 50% Off', link: '/footwear', img: 'https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=400', color: '#34D399' },
+  { label: 'Footwear', discount: 'Flat 50% Off', link: '/footwear', img: 'https://images.unsplash.com/photo-1539185441755-769473a23570?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', color: '#34D399' },
   { label: 'Accessories', discount: 'Starting ₹299', link: '/accessories', img: 'https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=400', color: '#FF9F00' },
 ];
 

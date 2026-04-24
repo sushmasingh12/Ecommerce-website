@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllProducts } from '../../products/data/products';
+import { loadState } from '../../../shared/utils/persistence';
 
 // Pick 4 random in-stock products as initial wishlist items
 const getInitialWishlistItems = () => {
@@ -29,8 +30,10 @@ const getInitialCurated = () => {
   }));
 };
 
+const savedItems = loadState('bazario_wishlist_items');
+
 const initialState = {
-  items: getInitialWishlistItems(),
+  items: savedItems || getInitialWishlistItems(),
   isPublic: true,
   curatedRecommendations: getInitialCurated(),
 };

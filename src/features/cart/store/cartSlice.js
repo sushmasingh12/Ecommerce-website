@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { loadState, saveState } from '../../../shared/utils/persistence';
+
+const savedItems = loadState('bazario_cart_items');
 
 const initialState = {
-  items: [
-    
-  ],
+  items: savedItems || [],
   isDrawerOpen: false,
 };
 

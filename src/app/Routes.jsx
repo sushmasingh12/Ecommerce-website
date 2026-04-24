@@ -6,7 +6,7 @@ import ProductsPage from '../features/products/pages/ProductsPage'
 import ProductDetailPage from '../features/products/pages/ProductDetailPage';
 import WishlistPage from '../features/wishlist/pages/WishlistPage';
 import CartPage from '../features/cart/pages/CartPage';
-import OrderHistory from '../features/orders/pages/OrderHistory';
+import OrderHistory from '../features/account/pages/Orderhistory';
 import CheckoutPage from '../features/checkout/pages/CheckoutPage';
 import ProfileOverview from '../features/account/pages/ProfileOverview';
 import ProfileDetails from '../features/account/pages/ProfileDetails';
@@ -19,12 +19,19 @@ import ShippingPage from '../features/footer/support/ShippingPage'
 import ReturnsPage from '../features/footer/support/ReturnsPage'
 import BoutiquesPage from '../features/footer/support/BoutiquesPage'
 import AppointmentsPage from '../features/footer/support/AppointmentsPage'
+import Settings from '../features/account/pages/Settings'
+import HelpSupport from '../features/account/pages/Helpsupport '
+import SignIn from '../features/auth/pages/SignIn';
+import SignUp from '../features/auth/pages/SignUp';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='/' element={<Layout />}>
             <Route index element={<Dashboard />} />
 
+            {/* Auth */}
+            <Route path="signin" element={<SignIn />} />
+            <Route path="signup" element={<SignUp />} />
 
             {/* Women */}
             <Route path="women" element={<ProductsPage category="women" />} />
@@ -61,6 +68,8 @@ const router = createBrowserRouter(
             <Route path="account/profile" element={<ProfileDetails />} />
             <Route path="account/addresses" element={<SavedAddresses />} />
             <Route path="account/payments" element={<PaymentMethods />} />
+            <Route path="account/settings" element={<Settings />} />
+            <Route path="account/help" element={<HelpSupport />} />
 
             {/*Editorial*/}
             <Route path="/about" element={<AboutPage />} />

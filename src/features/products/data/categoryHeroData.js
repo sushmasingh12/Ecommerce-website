@@ -17,7 +17,7 @@ export const categoryHeroData = {
       title: "Menswear",
       subtitle: "The Modern Uniform",
       description: "A curated selection of masculine silhouettes focusing on structural tailing and high-performance textiles.",
-      image: "https://images.unsplash.com/photo-1517938889432-a2ac9241a486?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3MjAxN3wwfDF8c2VhcmNofDZ8fG1hbiUyMGZhc2hpb258ZW58MHx8fHwxNzc2NTQyNTA5fDA&ixlib=rb-4.1.0&q=85&q=85&fmt=jpg&crop=entropy&cs=tinysrgb&w=450",
+      image: "https://images.unsplash.com/photo-1507680434567-5739c80be1ac?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       cta: "Discover More"
     },
 
@@ -28,7 +28,7 @@ export const categoryHeroData = {
       title: "Accessories",
       subtitle: "The Anchors",
       description: "The architectural anchors of your wardrobe. Handmade leather goods and precision-crafted timepieces.",
-      image: "https://lh3.googleusercontent.com/aida-public/AB6AXuBZIhuOPZIdnusSP9rZ7u5RTgv2DGmKhk6rnxPH3Gei9az2p8QAgU6nvjDu-ep085yE1XsIM-4iuGJcQDFgnTXdoDQ_Idq9sjSEBKchNxFPMT4dyG1oH-9DyosNs_WuGjenttLGVBEbB4gKISpRVpSlYZMQlUuvULo-0xZlpvFbKfyMI0uB_9GZ6xDgaYY0G1In_5DZ15iZ_K_SzoXtEcc-00Fy96FlURch6-Wazxb8567p9WeRhbEFP4INPf9nx0YqsYVquyAMr-U",
+      image: "https://images.unsplash.com/photo-1705909237050-7a7625b47fac?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       cta: "Shop All"
     },
     {
@@ -40,5 +40,14 @@ export const categoryHeroData = {
       cta: "Explore Bags"
     }
   ],
-
+  footwear: [
+    {
+      id: 1,
+      title: "Footwear",
+      subtitle: "The Foundation",
+      description: "Precision-engineered footwear designed for both form and function. Step into excellence.",
+      image: "https://images.unsplash.com/photo-1539185441755-769473a23570?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      cta: "Shop Collection"
+    }
+  ],
 };

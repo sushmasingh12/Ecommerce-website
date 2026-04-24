@@ -35,8 +35,41 @@ const ProductFilterSidebar = ({ category: propCategory }) => {
   );
   const subcategories = categoryData?.subcategories || [];
 
-  const sizes = ['XS', 'S', 'M', 'L', 'XL'];
-  const materials = ['Silk Crepe', 'Virgin Wool', 'Fine Merino', 'Organic Linen', 'Cotton Blend', 'Nappa Leather'];
+  // Dynamic sizes based on category
+  const getSizesByCategory = (cat) => {
+    switch (cat) {
+      case 'footwear':
+        return ['39', '40', '41', '42', '43', '44'];
+      case 'accessories':
+        return ['One Size'];
+      case 'men':
+      case 'women':
+      default:
+        return ['S', 'M', 'L', 'XL'];
+    }
+  };
+  
+  const sizes = getSizesByCategory(currentCategorySlug);
+  
+  // Materials used in products
+  const materials = [
+    'Premium Cotton', 
+    'Silk Crepe', 
+    'Virgin Wool', 
+    'Fine Merino', 
+    'Organic Linen', 
+    'Cotton Blend', 
+    'Nappa Leather', 
+    'Italian Calfskin', 
+    'Leather', 
+    'Canvas',
+    'Brass Hardware',
+    'Textured Cotton',
+    'Cotton Twill',
+    'Fleece Lining',
+    'Vegan Leather',
+    'Suede'
+  ];
   const occasions = ['Casual', 'Work', 'Evening', 'Formal', 'Streetwear', 'Party'];
   const ratings = [5, 4, 3];
   
@@ -111,29 +144,29 @@ const ProductFilterSidebar = ({ category: propCategory }) => {
           <input 
             type="range" 
             min="0" 
-            max="100000" 
-            step="1000"
+            max="5000" 
+            step="100"
             value={filters.priceRange[1]}
             onChange={handlePriceChange}
             className="w-full accent-primary h-2 border border-secondary-container bg-outline-variant/30 rounded-lg appearance-none cursor-pointer mb-4"
           />
           <div className="flex justify-between text-[9px] text-on-surface-variant/50 uppercase tracking-tighter">
              <span>₹0</span>
-             <span>₹5,00,000</span>
+             <span>₹5,000</span>
           </div>
         </section>
 
         {/* Filter: Size */}
         <section>
           <h3 className="font-label text-[11px] uppercase tracking-[0.2em] text-on-surface-variant/70 mb-5">Size</h3>
-          <div className="grid grid-cols-5 gap-2">
+          <div className="flex flex-wrap gap-2">
             {sizes.map((size) => {
               const isSelected = filters.sizes.includes(size);
               return (
                 <button
                   key={size}
                   onClick={() => handleToggle('sizes', size)}
-                  className={`h-5 w-7 border flex items-center justify-center text-[10px] transition-all duration-300 ${
+                  className={`h-7 min-w-[32px] px-2 border flex items-center justify-center text-[10px] transition-all duration-300 ${
                     isSelected 
                       ? 'border-primary bg-primary text-surface' 
                       : 'border-outline-variant/30 hover:border-primary text-on-surface'
