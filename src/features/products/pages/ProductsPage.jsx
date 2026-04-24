@@ -7,12 +7,16 @@ import CategoryHero from '../components/CategoryHero';
 import ProductCard from '../components/ProductCard';
 import ProductFilterSidebar from '../components/ProductFilterSidebar';
 import Pagination from '../components/Pagination';
+import { Helmet } from 'react-helmet-async';
 
 const PRODUCTS_PER_PAGE = 9;
 
 const ProductsPage = ({ category: propCategory }) => {
   const { category: paramCategory, sub } = useParams();
   const category = propCategory || paramCategory || 'women';
+  const displayTitle = sub 
+    ? `${sub.charAt(0).toUpperCase() + sub.slice(1)} | Bazario`
+    : `${category.charAt(0).toUpperCase() + category.slice(1)} Collection | Bazario`;
   const isSpecialCategory = category === 'collections' || category === 'new-arrivals';
   const { collection, isLoading, error } = useProducts(category, sub);
   const { filters } = useSelector((state) => state.products);
@@ -82,6 +86,10 @@ const ProductsPage = ({ category: propCategory }) => {
 
   return (
     <div className="bg-surface min-h-screen">
+      <Helmet>
+        <title>{displayTitle}</title>
+        <meta name="description" content={`Explore the finest ${sub || category} selection at Bazario. Premium quality and timeless designs.`} />
+      </Helmet>
       {isLoading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-surface/80 backdrop-blur-sm">
           <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>

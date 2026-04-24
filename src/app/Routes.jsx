@@ -1,32 +1,40 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
 import Layout from './Layout'
-import Dashboard from '../features/dashboard/pages/Dashboard'
-import ProductsPage from '../features/products/pages/ProductsPage'
-import ProductDetailPage from '../features/products/pages/ProductDetailPage';
-import WishlistPage from '../features/wishlist/pages/WishlistPage';
-import CartPage from '../features/cart/pages/CartPage';
-import OrderHistory from '../features/account/pages/Orderhistory';
-import CheckoutPage from '../features/checkout/pages/CheckoutPage';
-import ProfileOverview from '../features/account/pages/ProfileOverview';
-import ProfileDetails from '../features/account/pages/ProfileDetails';
-import SavedAddresses from '../features/account/pages/SavedAddresses';
-import PaymentMethods from '../features/account/pages/PaymentMethods';
-import AboutPage from '../features/footer/editorial/AboutPage'
-import JournalPage from '../features/footer/editorial/JournalPage'
-import ContactPage from '../features/footer/support/ContactPage'
-import ShippingPage from '../features/footer/support/ShippingPage'
-import ReturnsPage from '../features/footer/support/ReturnsPage'
-import BoutiquesPage from '../features/footer/support/BoutiquesPage'
-import AppointmentsPage from '../features/footer/support/AppointmentsPage'
-import Settings from '../features/account/pages/Settings'
-import HelpSupport from '../features/account/pages/Helpsupport '
-import SignIn from '../features/auth/pages/SignIn';
-import SignUp from '../features/auth/pages/SignUp';
+import LoadingScreen from '../shared/components/LoadingScreen';
+
+// Lazy loaded components
+const Dashboard = lazy(() => import('../features/dashboard/pages/Dashboard'));
+const ProductsPage = lazy(() => import('../features/products/pages/ProductsPage'));
+const ProductDetailPage = lazy(() => import('../features/products/pages/ProductDetailPage'));
+const WishlistPage = lazy(() => import('../features/wishlist/pages/WishlistPage'));
+const CartPage = lazy(() => import('../features/cart/pages/CartPage'));
+const OrderHistory = lazy(() => import('../features/account/pages/Orderhistory'));
+const CheckoutPage = lazy(() => import('../features/checkout/pages/CheckoutPage'));
+const ProfileOverview = lazy(() => import('../features/account/pages/ProfileOverview'));
+const ProfileDetails = lazy(() => import('../features/account/pages/ProfileDetails'));
+const SavedAddresses = lazy(() => import('../features/account/pages/SavedAddresses'));
+const PaymentMethods = lazy(() => import('../features/account/pages/PaymentMethods'));
+const AboutPage = lazy(() => import('../features/footer/editorial/AboutPage'));
+const JournalPage = lazy(() => import('../features/footer/editorial/JournalPage'));
+const ContactPage = lazy(() => import('../features/footer/support/ContactPage'));
+const ShippingPage = lazy(() => import('../features/footer/support/ShippingPage'));
+const ReturnsPage = lazy(() => import('../features/footer/support/ReturnsPage'));
+const BoutiquesPage = lazy(() => import('../features/footer/support/BoutiquesPage'));
+const AppointmentsPage = lazy(() => import('../features/footer/support/AppointmentsPage'));
+const Settings = lazy(() => import('../features/account/pages/Settings'));
+const HelpSupport = lazy(() => import('../features/account/pages/Helpsupport '));
+const SignIn = lazy(() => import('../features/auth/pages/SignIn'));
+const SignUp = lazy(() => import('../features/auth/pages/SignUp'));
+const NotFound = lazy(() => import('../shared/pages/NotFound'));
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path='/' element={<Layout />}>
+        <Route path='/' element={
+            <Suspense fallback={<LoadingScreen />}>
+                <Layout />
+            </Suspense>
+        }>
             <Route index element={<Dashboard />} />
 
             {/* Auth */}
@@ -79,6 +87,7 @@ const router = createBrowserRouter(
             <Route path="/returns" element={<ReturnsPage />} />
             <Route path="/boutiques" element={<BoutiquesPage />} />
             <Route path="/appointments" element={<AppointmentsPage />} />
+            <Route path="*" element={<NotFound />} />
         </Route>
     )
 )

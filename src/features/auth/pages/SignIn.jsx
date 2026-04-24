@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from '../hooks/useAuth';
 import FormField from '../../../shared/components/Form/FormField';
 import Input from '../../../shared/components/Form/Input';
+import { Helmet } from 'react-helmet-async';
 
 const SignIn = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -21,6 +22,10 @@ const SignIn = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col justify-center py-12 px-6 lg:px-8">
+      <Helmet>
+        <title>Sign In | Bazario</title>
+        <meta name="description" content="Sign in to your Bazario account to manage your orders and wishlist." />
+      </Helmet>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center mb-10">
           <span className="text-[#FF9F00] font-bold text-4xl" style={{ fontFamily: 'Sora, sans-serif' }}>

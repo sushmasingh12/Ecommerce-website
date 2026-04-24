@@ -12,6 +12,7 @@ const CategoryHero = ({ category = 'women' }) => {
           src={slide.image}
           alt={slide.title}
           className="w-full h-full object-contain"
+          loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-black/10"></div>
       </div>

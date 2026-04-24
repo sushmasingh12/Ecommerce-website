@@ -1,10 +1,10 @@
 import React from "react";
 
-const FormField = ({ label, error, children, className = "" }) => {
+const FormField = ({ label, id, error, children, className = "" }) => {
   return (
     <div className={`flex flex-col space-y-2 ${className}`}>
       {label && (
-        <label className="font-label text-[10px] font-bold uppercase tracking-widest text-primary/60">
+        <label htmlFor={id} className="font-label text-[10px] font-bold uppercase tracking-widest text-primary/60">
           {label}
         </label>
       )}

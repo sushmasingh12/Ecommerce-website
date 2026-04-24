@@ -7,6 +7,7 @@ import ProductAccordions from '../components/productDetails/ProductAccordions';
 import AIReviewSummary from '../components/productDetails/AIReviewSummary';
 import CuratorVoice from '../components/productDetails/CuratorVoice';
 import RelatedProducts from '../components/productDetails/RelatedProducts';
+import { Helmet } from 'react-helmet-async';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -44,6 +45,10 @@ const ProductDetailPage = () => {
 
   return (
     <main className="pt-10 pb-24 bg-surface text-on-surface">
+      <Helmet>
+        <title>{`${product.name} | Bazario`}</title>
+        <meta name="description" content={product.subdesc || `Buy ${product.name} at Bazario. Premium quality fashion and accessories.`} />
+      </Helmet>
       <section className="max-w-[1920px] mx-auto px-4 sm:px-8 md:px-12 grid lg:grid-cols-12 gap-8 md:gap-16 relative">
         {/* Gallery */}
         <ProductGallery images={product.images} />

@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from '../hooks/useAuth';
 import FormField from '../../../shared/components/Form/FormField';
 import Input from '../../../shared/components/Form/Input';
+import { Helmet } from 'react-helmet-async';
 
 const SignUp = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -23,6 +24,10 @@ const SignUp = () => {
 
   return (
     <div className="min-h-screen bg-white flex flex-col justify-center py-12 px-6 lg:px-8">
+      <Helmet>
+        <title>Create Account | Bazario</title>
+        <meta name="description" content="Join Bazario today for a bespoke shopping experience. Exclusive access to premium collections." />
+      </Helmet>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center mb-10">
           <span className="text-[#FF9F00] font-bold text-4xl" style={{ fontFamily: 'Sora, sans-serif' }}>

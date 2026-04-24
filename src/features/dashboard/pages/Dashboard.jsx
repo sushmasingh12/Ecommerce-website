@@ -9,6 +9,8 @@ import BrandPhilosophy from '../components/BrandPhilosophy';
 import Testimonials from '../components/Testimonials';
 import Newsletter from '../components/Newsletter';
 
+import { Helmet } from 'react-helmet-async';
+
 const Dashboard = () => {
   const { products, categories, isLoading, error } = useDashboard();
 
@@ -22,6 +24,10 @@ const Dashboard = () => {
 
   return (
     <main className="overflow-x-hidden">
+      <Helmet>
+        <title>Bazario | Premium E-commerce Destination</title>
+        <meta name="description" content="Shop the latest trends in fashion and accessories at Bazario. Discover curated collections for men and women." />
+      </Helmet>
       {/* Loading overlay for data transitions */}
       {isLoading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm transition-opacity duration-300">
