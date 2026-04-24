@@ -52,7 +52,7 @@ const CheckoutPage = () => {
   };
 
   return (
-    <main className="pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-[1920px] mx-auto min-h-screen text-on-surface">
+    <main className="pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-480 mx-auto min-h-screen text-on-surface">
       <div className="mb-16">
         <h1 className="font-headline text-5xl md:text-6xl tracking-tight leading-tight">Checkout</h1>
         <p className="font-label text-xs tracking-widest uppercase mt-4 text-on-surface-variant/60">
@@ -271,10 +271,10 @@ const CheckoutPage = () => {
               <h3 className="font-headline text-xl mb-10 tracking-tight">Acquisition Details</h3>
               
               {/* Item List */}
-              <div className="space-y-8 mb-12 max-h-[400px] overflow-y-auto pr-4 scrollbar-hide">
+              <div className="space-y-8 mb-12 max-h-100 overflow-y-auto pr-4 scrollbar-hide">
                 {items.map((item) => (
                   <div key={`${item.id}-${item.variant}`} className="flex gap-6">
-                    <div className="w-24 h-32 bg-surface-container flex-shrink-0 overflow-hidden">
+                    <div className="w-24 h-32 bg-surface-container shrink-0 overflow-hidden">
                       <img alt={item.name} className="w-full h-full object-cover" src={item.image} />
                     </div>
                     <div className="flex-1 flex flex-col justify-between py-1">
@@ -295,7 +295,7 @@ const CheckoutPage = () => {
               <div className="mb-12">
                 <label className="font-label text-[10px] tracking-widest uppercase text-on-surface-variant/60 block mb-2 font-bold">Promo Code</label>
                 <div className="flex border-b border-outline-variant/30">
-                  <input className="flex-grow bg-transparent py-2 font-body text-sm border-none focus:ring-0 outline-none" placeholder="CURATOR10" type="text"/>
+                  <input className="grow bg-transparent py-2 font-body text-sm border-none focus:ring-0 outline-none" placeholder="CURATOR10" type="text"/>
                   <button className="font-label text-[10px] tracking-widest uppercase px-4 hover:text-secondary transition-colors font-bold">Apply</button>
                 </div>
               </div>

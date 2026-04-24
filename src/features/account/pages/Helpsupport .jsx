@@ -33,9 +33,9 @@ const HelpSupport = () => {
   return (
     <AccountLayout>
       {/* Header card */}
-      <div className="bg-gradient-to-r from-[#131921] to-[#232f3e] rounded-xl p-6 mb-4 text-white">
+      <div className="bg-linear-to-r from-primary to-primary-container rounded-xl p-6 mb-4 text-white">
         <div className="flex items-start gap-3 mb-4">
-          <span className="material-symbols-outlined text-[#FF9F00] text-3xl">support_agent</span>
+          <span className="material-symbols-outlined text-secondary text-3xl">support_agent</span>
           <div>
             <h2 className="font-bold text-lg">Help & Support</h2>
             <p className="text-white/70 text-sm">We're here 24/7. How can we help you?</p>
@@ -45,8 +45,8 @@ const HelpSupport = () => {
         <div className="flex gap-2">
           <input value={query} onChange={e => setQuery(e.target.value)}
             placeholder="Search for help topics..."
-            className="flex-1 px-4 py-2.5 rounded-lg text-sm bg-white/10 text-white placeholder:text-white/40 border border-white/10 focus:outline-none focus:border-[#FF9F00] focus:ring-1 focus:ring-[#FF9F00]" />
-          <button className="px-5 py-2.5 bg-[#FF9F00] text-[#131921] rounded-lg text-sm font-bold">
+            className="flex-1 px-4 py-2.5 rounded-lg text-sm bg-white/10 text-white placeholder:text-white/40 border border-white/10 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" />
+          <button className="px-5 py-2.5 bg-secondary text-primary rounded-lg text-sm font-bold">
             Search
           </button>
         </div>
@@ -57,7 +57,7 @@ const HelpSupport = () => {
         {[
           { icon: 'chat',          label: 'Live Chat',     sub: 'Avg 2 min wait',  color: 'text-green-500' },
           { icon: 'call',          label: 'Call Us',       sub: '1800-123-4567',   color: 'text-blue-500'  },
-          { icon: 'mail',          label: 'Email Us',      sub: 'Reply in 24 hrs', color: 'text-[#FF9F00]' },
+          { icon: 'mail',          label: 'Email Us',      sub: 'Reply in 24 hrs', color: 'text-secondary' },
         ].map(({ icon, label, sub, color }) => (
           <button key={label}
             className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col items-center text-center hover:shadow-md hover:border-gray-200 transition-all">
@@ -74,7 +74,7 @@ const HelpSupport = () => {
           {[['faq', 'FAQs', 'quiz'], ['categories', 'Browse Topics', 'category'], ['contact', 'Contact Us', 'mail']].map(([id, label, icon]) => (
             <button key={id} onClick={() => setActiveTab(id)}
               className={`flex-1 flex items-center justify-center gap-1.5 py-3.5 text-xs font-semibold transition-all border-b-2 ${
-                activeTab === id ? 'border-[#FF9F00] text-[#131921]' : 'border-transparent text-gray-500 hover:text-gray-700'
+                activeTab === id ? 'border-secondary text-primary' : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}>
               <span className="material-symbols-outlined text-base">{icon}</span>
               <span className="hidden sm:inline">{label}</span>
@@ -93,7 +93,7 @@ const HelpSupport = () => {
                   <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
                     className="w-full flex items-center justify-between px-4 py-3.5 text-left hover:bg-gray-50 transition-all">
                     <span className="text-sm font-semibold text-gray-800 pr-4">{faq.q}</span>
-                    <span className="material-symbols-outlined text-gray-400 flex-shrink-0 text-lg">
+                    <span className="material-symbols-outlined text-gray-400 shrink-0 text-lg">
                       {openFaq === i ? 'expand_less' : 'expand_more'}
                     </span>
                   </button>
@@ -113,7 +113,7 @@ const HelpSupport = () => {
               {CATEGORIES.map(({ icon, label, topics }) => (
                 <div key={label} className="border border-gray-100 rounded-xl p-4 hover:border-gray-200 hover:shadow-sm transition-all">
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="material-symbols-outlined text-[#FF9F00]">{icon}</span>
+                    <span className="material-symbols-outlined text-secondary">{icon}</span>
                     <h3 className="text-sm font-bold text-gray-900">{label}</h3>
                   </div>
                   <div className="space-y-1.5">
@@ -143,22 +143,22 @@ const HelpSupport = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Issue Category</label>
-                    <select className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00]">
+                    <select className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary">
                       {CATEGORIES.map(c => <option key={c.label}>{c.label}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Order ID (optional)</label>
                     <input placeholder="e.g. BZ-20241201"
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00]" />
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Describe Your Issue</label>
                     <textarea rows={4} placeholder="Tell us what happened..."
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00] resize-none" />
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary resize-none" />
                   </div>
                   <button onClick={() => setSent(true)}
-                    className="w-full py-3 bg-[#131921] text-white rounded-lg text-sm font-bold hover:bg-[#232f3e] transition-all">
+                    className="w-full py-3 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-container transition-all">
                     Submit Request
                   </button>
                 </div>
@@ -169,13 +169,13 @@ const HelpSupport = () => {
       </div>
 
       {/* App download nudge */}
-      <div className="bg-[#131921] rounded-xl p-5 flex items-center gap-4">
-        <span className="material-symbols-outlined text-[#FF9F00] text-3xl flex-shrink-0">phone_android</span>
+      <div className="bg-primary rounded-xl p-5 flex items-center gap-4">
+        <span className="material-symbols-outlined text-secondary text-3xl shrink-0">phone_android</span>
         <div>
           <p className="text-white font-bold text-sm">Get faster support on the Bazario app</p>
           <p className="text-white/50 text-xs mt-0.5">Live chat, instant tracking & easy returns — all in one place</p>
         </div>
-        <button className="ml-auto flex-shrink-0 px-4 py-2 bg-[#FF9F00] text-[#131921] rounded-lg text-xs font-bold hover:bg-[#e8900a] transition-all">
+        <button className="ml-auto shrink-0 px-4 py-2 bg-secondary text-primary rounded-lg text-xs font-bold hover:bg-secondary-container transition-all">
           Download
         </button>
       </div>

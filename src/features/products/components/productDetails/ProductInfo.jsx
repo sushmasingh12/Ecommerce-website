@@ -109,7 +109,7 @@ const ProductInfo = ({
             {/* {product.aiRecommendation && (
               <div className="flex items-center gap-3 bg-surface-container-low px-4 py-3 max-w-sm border-l-2 border-secondary">
                 <span className="material-symbols-outlined text-secondary text-sm">auto_awesome</span>
-                <p className="text-[11px] leading-tight text-on-secondary-fixed-variant">
+                <p className="text-[11px] leading-tight text-primary-fixed-variant">
                   Our AI suggests <span className="font-bold">size {product.aiRecommendation.size}</span> {product.aiRecommendation.reason}
                 </p>
               </div>
@@ -122,7 +122,7 @@ const ProductInfo = ({
   <div className="flex flex-col sm:flex-row gap-3">
     <button
       onClick={handleAddToBag}
-      className={`flex-1 min-h-[52px] px-6 rounded-full text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 flex items-center justify-center ${
+      className={`flex-1 min-h-13 px-6 rounded-full text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 flex items-center justify-center ${
         isInCart
           ? 'bg-primary text-on-primary shadow-md'
           : 'bg-primary text-on-primary hover:opacity-90 hover:shadow-md'
@@ -138,7 +138,7 @@ const ProductInfo = ({
 
     <button
       onClick={handleWishlist}
-      className={`flex-1 min-h-[52px] px-6 rounded-full border text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 flex items-center justify-center ${
+      className={`flex-1 min-h-13 px-6 rounded-full border text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 flex items-center justify-center ${
         loved
           ? 'bg-secondary border-secondary text-white shadow-sm'
           : 'border-outline-variant bg-white text-on-surface hover:border-primary hover:bg-surface-container-low'

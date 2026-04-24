@@ -96,8 +96,8 @@ const ProductCard = ({ product }) => {
             onClick={handleAddToCart}
             className={`mt-2.5 w-full py-2 rounded-lg text-xs font-bold transition-all duration-200 ${
               isInCart
-                ? 'bg-[#FF9F00] text-[#131921] hover:bg-[#e8900a]'
-                : 'bg-[#131921] text-white hover:bg-[#232f3e]'
+                ? 'bg-secondary text-primary hover:bg-secondary-container'
+                : 'bg-primary text-white hover:bg-primary-container'
             }`}
           >
             {isInCart ? '🛒 Go to Cart' : '+ Add to Cart'}

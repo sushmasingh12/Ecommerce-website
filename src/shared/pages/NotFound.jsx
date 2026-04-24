@@ -8,7 +8,7 @@ const NotFound = () => {
       <Helmet>
         <title>404 - Page Not Found | Bazario</title>
       </Helmet>
-      <h1 className="font-serif text-9xl text-[#131921]/5 absolute select-none">404</h1>
+      <h1 className="font-serif text-9xl text-primary/5 absolute select-none">404</h1>
       <div className="relative">
         <span className="material-symbols-outlined text-4xl text-secondary mb-4">explore_off</span>
         <h2 className="font-serif text-3xl mb-4">Lost in the Collection?</h2>
@@ -17,7 +17,7 @@ const NotFound = () => {
         </p>
         <Link
           to="/"
-          className="inline-block px-10 py-4 bg-[#131921] text-white uppercase tracking-[0.2em] text-[10px] font-bold hover:bg-[#232f3e] transition-all"
+          className="inline-block px-10 py-4 bg-primary text-white uppercase tracking-[0.2em] text-[10px] font-bold hover:bg-primary-container transition-all"
         >
           Return to Atelier
         </Link>

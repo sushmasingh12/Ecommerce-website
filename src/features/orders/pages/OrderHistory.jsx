@@ -6,7 +6,7 @@ const OrderHistory = () => {
   const orders = useSelector(selectOrders);
 
   return (
-    <main className="pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-[1920px] mx-auto w-full flex-grow min-h-screen">
+    <main className="pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-480 mx-auto w-full grow min-h-screen">
       {/* Breadcrumb */}
       <nav className="flex mb-12 text-[10px] uppercase tracking-[0.2em] font-label text-gray-400">
         <a className="hover:text-black transition-colors" href="/">Home</a>
@@ -64,7 +64,7 @@ const OrderHistory = () => {
 
               {/* Financial & Actions */}
               <div className="flex flex-col md:flex-row items-start md:items-center gap-8 lg:gap-16">
-                <div className="text-right lg:min-w-[120px]">
+                <div className="text-right lg:min-w-30">
                   <p className="text-[10px] uppercase tracking-widest text-gray-400 font-label mb-1">Total</p>
                   <p className="text-xl font-serif text-black">${order.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
                 </div>

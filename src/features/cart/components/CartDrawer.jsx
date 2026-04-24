@@ -20,12 +20,12 @@ const CartDrawer = () => {
     <>
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[60] transition-opacity duration-300"
+        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-60 transition-opacity duration-300"
         onClick={closeDrawer}
       ></div>
 
       {/* Mini Cart Drawer */}
-      <aside className="fixed right-0 top-0 h-screen w-full max-w-md bg-white z-[70] flex flex-col shadow-2xl overflow-hidden animate-slide-in-right">
+      <aside className="fixed right-0 top-0 h-screen w-full max-w-md bg-white z-70 flex flex-col shadow-2xl overflow-hidden animate-slide-in-right">
         {/* Drawer Header */}
         <header className="px-8 py-10 flex justify-between items-center bg-white border-b border-gray-100">
           <div>
@@ -58,7 +58,7 @@ const CartDrawer = () => {
           ) : (
             items.map((item) => (
               <div key={`${item.id}-${item.variant}`} className="flex gap-6 group">
-                <div className="w-24 aspect-[3/4] bg-gray-50 overflow-hidden">
+                <div className="w-24 aspect-3/4 bg-gray-50 overflow-hidden">
                   <img 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                     src={item.image} 

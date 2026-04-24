@@ -8,12 +8,12 @@ const Field = ({ label, name, value, onChange, type = 'text', options }) => (
     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">{label}</label>
     {options ? (
       <select name={name} value={value} onChange={onChange}
-        className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00] focus:border-transparent bg-white">
+        className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent bg-white">
         {options.map(o => <option key={o}>{o}</option>)}
       </select>
     ) : (
       <input type={type} name={name} value={value} onChange={onChange}
-        className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00] focus:border-transparent" />
+        className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent" />
     )}
   </div>
 );
@@ -34,13 +34,13 @@ const ProfileDetails = () => {
       {/* Profile Info */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-4">
         <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-2">
-          <span className="material-symbols-outlined text-[#FF9F00]">account_circle</span>
+          <span className="material-symbols-outlined text-secondary">account_circle</span>
           <h2 className="font-bold text-gray-900">Profile Information</h2>
         </div>
 
         {/* Avatar */}
         <div className="px-5 py-5 border-b border-gray-100 flex items-center gap-5">
-          <div className="w-20 h-20 rounded-full bg-[#131921] flex items-center justify-center text-white text-3xl font-bold flex-shrink-0">
+          <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center text-white text-3xl font-bold shrink-0">
             {user.name[0]}
           </div>
           <div>
@@ -64,7 +64,7 @@ const ProfileDetails = () => {
         <div className="px-5 pb-5">
           <button onClick={handleSave}
             className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${
-              saved ? 'bg-green-500 text-white' : 'bg-[#131921] text-white hover:bg-[#232f3e]'
+              saved ? 'bg-green-500 text-white' : 'bg-primary text-white hover:bg-primary-container'
             }`}>
             {saved ? '✓ Changes Saved' : 'Save Changes'}
           </button>
@@ -74,7 +74,7 @@ const ProfileDetails = () => {
       {/* Password */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-4">
         <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-2">
-          <span className="material-symbols-outlined text-[#FF9F00]">lock</span>
+          <span className="material-symbols-outlined text-secondary">lock</span>
           <h2 className="font-bold text-gray-900">Change Password</h2>
         </div>
         <div className="px-5 py-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -86,14 +86,14 @@ const ProfileDetails = () => {
             <div key={key} className={key === 'current' ? 'sm:col-span-2' : ''}>
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">{label}</label>
               <input type="password" value={pwForm[key]} onChange={e => setPwForm(f => ({ ...f, [key]: e.target.value }))}
-                className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00] focus:border-transparent" />
+                className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent" />
             </div>
           ))}
         </div>
         <div className="px-5 pb-5">
           <button onClick={() => { setPwSaved(true); setTimeout(() => setPwSaved(false), 2500); }}
             className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${
-              pwSaved ? 'bg-green-500 text-white' : 'bg-[#131921] text-white hover:bg-[#232f3e]'
+              pwSaved ? 'bg-green-500 text-white' : 'bg-primary text-white hover:bg-primary-container'
             }`}>
             {pwSaved ? '✓ Password Updated' : 'Update Password'}
           </button>
@@ -111,7 +111,7 @@ const ProfileDetails = () => {
             <p className="text-sm font-semibold text-gray-800">Delete Account</p>
             <p className="text-xs text-gray-400 mt-0.5">This will permanently delete your account and all associated data.</p>
           </div>
-          <button className="px-4 py-2 text-sm font-semibold text-red-500 border border-red-200 rounded-lg hover:bg-red-50 transition-all flex-shrink-0">
+          <button className="px-4 py-2 text-sm font-semibold text-red-500 border border-red-200 rounded-lg hover:bg-red-50 transition-all shrink-0">
             Delete
           </button>
         </div>

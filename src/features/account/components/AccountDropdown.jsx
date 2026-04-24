@@ -17,7 +17,7 @@ const AccountDropdown = ({ isOpen, closeDropdown }) => {
         <>
           {/* User Header */}
           <div className="p-4 bg-gray-50 border-b border-gray-100 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#131921] flex items-center justify-center text-white font-bold text-sm">
+            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm">
               {user?.name?.[0] || 'U'}
             </div>
             <div className="min-w-0">
@@ -33,7 +33,7 @@ const AccountDropdown = ({ isOpen, closeDropdown }) => {
                 key={path}
                 to={path}
                 onClick={closeDropdown}
-                className="flex items-center gap-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-[#FF9F00] transition-colors"
+                className="flex items-center gap-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-secondary transition-colors"
               >
                 <span className="material-symbols-outlined text-lg">{icon}</span>
                 {label}
@@ -63,14 +63,14 @@ const AccountDropdown = ({ isOpen, closeDropdown }) => {
             <Link
               to="/signin"
               onClick={closeDropdown}
-              className="block w-full text-center py-2 bg-[#131921] text-white text-sm font-bold rounded-lg hover:bg-[#232f3e] transition-all"
+              className="block w-full text-center py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary-container transition-all"
             >
               Sign In
             </Link>
             <Link
               to="/signup"
               onClick={closeDropdown}
-              className="block w-full text-center py-2 border border-gray-200 text-[#131921] text-sm font-bold rounded-lg hover:bg-gray-50 transition-all"
+              className="block w-full text-center py-2 border border-gray-200 text-primary text-sm font-bold rounded-lg hover:bg-gray-50 transition-all"
             >
               Sign Up
             </Link>

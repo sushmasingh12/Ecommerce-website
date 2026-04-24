@@ -9,7 +9,7 @@ const REVIEWS = [
 
 const Testimonials = () => (
   <section className="py-12 bg-gray-50">
-    <div className="max-w-[1400px] mx-auto px-4 md:px-8">
+    <div className="max-w-350 mx-auto px-4 md:px-8">
       <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 text-center" style={{ fontFamily: 'Sora, sans-serif' }}>
         ⭐ What Our Customers Say
       </h2>
@@ -18,12 +18,12 @@ const Testimonials = () => (
           <div key={r.name} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-all">
             <div className="flex gap-0.5 mb-3">
               {Array.from({ length: r.rating }).map((_, i) => (
-                <span key={i} className="text-[#FF9F00] text-sm">★</span>
+                <span key={i} className="text-secondary text-sm">★</span>
               ))}
             </div>
             <p className="text-gray-600 text-sm leading-relaxed mb-4">"{r.text}"</p>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#131921] flex items-center justify-center text-white text-xs font-bold">
+              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">
                 {r.name[0]}
               </div>
               <div>

@@ -18,7 +18,7 @@ const AddressForm = ({ initial = EMPTY, onSave, onCancel }) => {
           {['Home','Work','Other'].map(t => (
             <button key={t} onClick={() => setForm(f => ({ ...f, type: t }))}
               className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                form.type === t ? 'bg-[#131921] text-white border-[#131921]' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
+                form.type === t ? 'bg-primary text-white border-primary' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
               }`}>
               {t}
             </button>
@@ -35,14 +35,14 @@ const AddressForm = ({ initial = EMPTY, onSave, onCancel }) => {
           <div key={name} className={full ? 'sm:col-span-2' : ''}>
             <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">{label}</label>
             <input name={name} value={form[name]} onChange={h}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00] bg-white" />
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white" />
           </div>
         ))}
         {/* State */}
         <div>
           <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">State</label>
           <select name="state" value={form.state} onChange={h}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00] bg-white">
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white">
             <option value="">Select State</option>
             {STATES.map(s => <option key={s}>{s}</option>)}
           </select>
@@ -51,13 +51,13 @@ const AddressForm = ({ initial = EMPTY, onSave, onCancel }) => {
         <div className="sm:col-span-2 flex items-center gap-2 mt-1">
           <input type="checkbox" id="default" checked={form.isDefault}
             onChange={e => setForm(f => ({ ...f, isDefault: e.target.checked }))}
-            className="accent-[#FF9F00] w-4 h-4" />
+            className="accent-secondary w-4 h-4" />
           <label htmlFor="default" className="text-sm text-gray-700">Set as default address</label>
         </div>
       </div>
       <div className="flex gap-2 mt-4">
         <button onClick={() => onSave(form)}
-          className="px-5 py-2 bg-[#131921] text-white rounded-lg text-sm font-bold hover:bg-[#232f3e] transition-all">
+          className="px-5 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-container transition-all">
           Save Address
         </button>
         <button onClick={onCancel}
@@ -83,11 +83,11 @@ const SavedAddresses = () => {
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#FF9F00]">location_on</span>
+            <span className="material-symbols-outlined text-secondary">location_on</span>
             <h2 className="font-bold text-gray-900">Saved Addresses</h2>
           </div>
           <button onClick={() => setShowForm(v => !v)}
-            className="flex items-center gap-1.5 text-sm font-bold text-[#131921] border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all">
+            className="flex items-center gap-1.5 text-sm font-bold text-primary border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all">
             <span className="material-symbols-outlined text-base">add</span>
             Add New
           </button>
@@ -107,10 +107,10 @@ const SavedAddresses = () => {
               {addresses.map(addr => (
                 <div key={addr.id}
                   className={`relative border rounded-xl p-4 transition-all ${
-                    addr.isDefault ? 'border-[#FF9F00] bg-[#FF9F00]/5' : 'border-gray-200 hover:border-gray-300'
+                    addr.isDefault ? 'border-secondary bg-secondary/5' : 'border-gray-200 hover:border-gray-300'
                   }`}>
                   {addr.isDefault && (
-                    <span className="absolute top-3 right-3 text-[10px] font-bold bg-[#FF9F00] text-[#131921] px-2 py-0.5 rounded-full">
+                    <span className="absolute top-3 right-3 text-[10px] font-bold bg-secondary text-primary px-2 py-0.5 rounded-full">
                       DEFAULT
                     </span>
                   )}

@@ -23,7 +23,7 @@ const OrderHistory = () => {
     <AccountLayout>
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-4">
         <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-2">
-          <span className="material-symbols-outlined text-[#FF9F00]">shopping_bag</span>
+          <span className="material-symbols-outlined text-secondary">shopping_bag</span>
           <h2 className="font-bold text-gray-900">My Orders</h2>
           <span className="ml-auto text-xs bg-gray-100 text-gray-600 font-semibold px-2.5 py-1 rounded-full">{orders.length} orders</span>
         </div>
@@ -33,7 +33,7 @@ const OrderHistory = () => {
           {FILTERS.map(f => (
             <button key={f} onClick={() => setFilter(f)}
               className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                filter === f ? 'bg-[#131921] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                filter === f ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}>
               {f}
             </button>
@@ -102,7 +102,7 @@ const OrderHistory = () => {
                           <span className="text-gray-200">|</span>
                           <button className="text-xs font-semibold text-gray-600 hover:text-gray-900">Return/Exchange</button>
                           <span className="text-gray-200">|</span>
-                          <button className="text-xs font-semibold text-[#FF9F00] hover:underline">Buy Again</button>
+                          <button className="text-xs font-semibold text-secondary hover:underline">Buy Again</button>
                         </>
                       )}
                       {(order.status === 'Shipped' || order.status === 'Processing') && (

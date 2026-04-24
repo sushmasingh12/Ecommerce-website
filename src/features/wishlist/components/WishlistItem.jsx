@@ -10,7 +10,7 @@ const WishlistItem = ({ item, index }) => {
 
   return (
     <div className={`group ${isOffset ? 'md:mt-12' : ''}`}>
-      <Link to={`/product/${item.id}`} className="block relative overflow-hidden aspect-[3/4] mb-6 bg-surface-container-lowest">
+      <Link to={`/product/${item.id}`} className="block relative overflow-hidden aspect-3/4 mb-6 bg-surface-container-lowest">
         <img 
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
           src={item.image} 

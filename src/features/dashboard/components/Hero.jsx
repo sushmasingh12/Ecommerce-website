@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const SLIDES = [
   {
-    bg: 'from-[#131921] to-[#1a252f]',
+    bg: 'from-primary to-primary-fixed',
     badge: '🔥 Mega Sale Live',
     headline: 'Up to 70% Off',
     sub: 'Electronics, Fashion & More',
@@ -48,11 +48,11 @@ const Hero = () => {
   const slide = SLIDES[active];
 
   return (
-    <section className={`relative w-full bg-gradient-to-r ${slide.bg} transition-all duration-700 overflow-hidden`}>
-      <div className="bg-secondary text-[#131921] text-center py-1.5 text-xs font-semibold tracking-wide">
+    <section className={`relative w-full bg-linear-to-r ${slide.bg} transition-all duration-700 overflow-hidden`}>
+      <div className="bg-secondary text-primary text-center py-1.5 text-xs font-semibold tracking-wide">
         🎉 FREE DELIVERY on orders above ₹499 · Easy 30-day returns · Secure payments
       </div>
-      <div className="max-w-[1400px] mx-auto px-4 md:px-12 py-10 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="max-w-350 mx-auto px-4 md:px-12 py-10 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="text-white order-2 md:order-1">
           <span className="inline-block text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full mb-4"
             style={{ backgroundColor: slide.accent, color: '#131921' }}>
@@ -88,7 +88,7 @@ const Hero = () => {
             <img key={active} src={slide.img} alt={slide.headline}
               className="relative w-72 h-72 sm:w-96 sm:h-96 object-cover rounded-2xl shadow-2xl"
               style={{ animation: 'fadeSlide 0.6s ease-out' }} />
-            <div className="absolute top-4 left-4 bg-white text-[#131921] text-[10px] font-bold uppercase px-2.5 py-1 rounded-full shadow">
+            <div className="absolute top-4 left-4 bg-white text-primary text-[10px] font-bold uppercase px-2.5 py-1 rounded-full shadow">
               {slide.tag}
             </div>
           </div>

@@ -5,7 +5,7 @@ import ProductCard from '../../products/components/ProductCard';
 const ProductGrid = ({ products }) => {
   return (
     <section className="py-10 bg-white">
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8">
+      <div className="max-w-350 mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-xl md:text-2xl font-bold text-gray-900" style={{ fontFamily: 'Sora, sans-serif' }}>

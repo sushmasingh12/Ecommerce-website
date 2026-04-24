@@ -21,9 +21,9 @@ const CuratedForYou = () => {
   {curatedRecommendations.map((rec) => (
     <div
       key={rec.id}
-      className="w-[210px] sm:w-[260px] md:w-[340px] flex-shrink-0 group"
+      className="w-52.5 sm:w-65 md:w-85 shrink-0 group"
     >
-      <div className="w-full h-[280px] sm:h-[340px] md:h-[430px] mb-5 md:mb-6 relative overflow-hidden bg-surface-container">
+      <div className="w-full h-70 sm:h-85 md:h-107.5 mb-5 md:mb-6 relative overflow-hidden bg-surface-container">
         <img
           className="w-full h-full object-cover grayscale-[0.3] hover:grayscale-0 transition-all duration-700"
           src={rec.image}

@@ -19,7 +19,7 @@ const ProductGallery = ({ images }) => {
             </div>
           ))
         ) : (
-          <div className="col-span-2 aspect-[16/9] overflow-hidden bg-surface-container-low">
+          <div className="col-span-2 aspect-video overflow-hidden bg-surface-container-low">
             
              {images?.hero && (
                 <img

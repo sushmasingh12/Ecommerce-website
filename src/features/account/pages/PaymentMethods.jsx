@@ -7,12 +7,12 @@ import AccountLayout from './Accountlayout';
 const ICON = { upi: 'account_balance_wallet', card: 'credit_card', netbanking: 'account_balance' };
 
 const PaymentCard = ({ p, onRemove, onDefault }) => (
-  <div className={`relative border rounded-xl p-4 transition-all ${p.isDefault ? 'border-[#FF9F00] bg-[#FF9F00]/5' : 'border-gray-200 hover:border-gray-300'}`}>
+  <div className={`relative border rounded-xl p-4 transition-all ${p.isDefault ? 'border-secondary bg-secondary/5' : 'border-gray-200 hover:border-gray-300'}`}>
     {p.isDefault && (
-      <span className="absolute top-3 right-3 text-[10px] font-bold bg-[#FF9F00] text-[#131921] px-2 py-0.5 rounded-full">DEFAULT</span>
+      <span className="absolute top-3 right-3 text-[10px] font-bold bg-secondary text-primary px-2 py-0.5 rounded-full">DEFAULT</span>
     )}
     <div className="flex items-center gap-3 mb-3">
-      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center shrink-0">
         <span className="material-symbols-outlined text-gray-600 text-xl">{ICON[p.type] || 'credit_card'}</span>
       </div>
       <div>
@@ -65,11 +65,11 @@ const PaymentMethods = () => {
       <div className="bg-white rounded-xl shadow-sm border border-gray-100">
         <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#FF9F00]">payments</span>
+            <span className="material-symbols-outlined text-secondary">payments</span>
             <h2 className="font-bold text-gray-900">Payment Methods</h2>
           </div>
           <button onClick={() => setShowForm(v => !v)}
-            className="flex items-center gap-1.5 text-sm font-bold text-[#131921] border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all">
+            className="flex items-center gap-1.5 text-sm font-bold text-primary border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all">
             <span className="material-symbols-outlined text-base">add</span>
             Add New
           </button>
@@ -85,7 +85,7 @@ const PaymentMethods = () => {
                 {[['upi', 'UPI / Wallets'], ['card', 'Debit / Credit Card']].map(([t, l]) => (
                   <button key={t} onClick={() => setTab(t)}
                     className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                      tab === t ? 'bg-[#131921] text-white border-[#131921]' : 'bg-white text-gray-600 border-gray-200'
+                      tab === t ? 'bg-primary text-white border-primary' : 'bg-white text-gray-600 border-gray-200'
                     }`}>
                     {l}
                   </button>
@@ -96,9 +96,9 @@ const PaymentMethods = () => {
                 <div>
                   <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">UPI ID</label>
                   <input value={upiId} onChange={e => setUpiId(e.target.value)} placeholder="yourname@upi"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00] bg-white mb-3" />
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white mb-3" />
                   <div className="flex gap-2">
-                    <button onClick={handleAddUpi} className="px-5 py-2 bg-[#131921] text-white rounded-lg text-sm font-bold hover:bg-[#232f3e] transition-all">Add UPI</button>
+                    <button onClick={handleAddUpi} className="px-5 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-container transition-all">Add UPI</button>
                     <button onClick={() => setShowForm(false)} className="px-5 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50">Cancel</button>
                   </div>
                 </div>
@@ -113,18 +113,18 @@ const PaymentMethods = () => {
                       <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">{label}</label>
                       <input value={card[key]} placeholder={placeholder}
                         onChange={e => setCard(c => ({ ...c, [key]: e.target.value }))}
-                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00] bg-white" />
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white" />
                     </div>
                   ))}
                   <div>
                     <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Card Type</label>
                     <select value={card.cardType} onChange={e => setCard(c => ({ ...c, cardType: e.target.value }))}
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9F00] bg-white">
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white">
                       {['Visa Debit','Mastercard Debit','Visa Credit','Mastercard Credit','RuPay'].map(t => <option key={t}>{t}</option>)}
                     </select>
                   </div>
                   <div className="sm:col-span-2 flex gap-2 mt-1">
-                    <button onClick={handleAddCard} className="px-5 py-2 bg-[#131921] text-white rounded-lg text-sm font-bold hover:bg-[#232f3e] transition-all">Add Card</button>
+                    <button onClick={handleAddCard} className="px-5 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-container transition-all">Add Card</button>
                     <button onClick={() => setShowForm(false)} className="px-5 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50">Cancel</button>
                   </div>
                 </div>
@@ -148,7 +148,7 @@ const PaymentMethods = () => {
 
           {/* Security note */}
           <div className="mt-5 flex items-start gap-2 bg-green-50 border border-green-100 rounded-lg px-4 py-3">
-            <span className="material-symbols-outlined text-green-500 text-lg flex-shrink-0 mt-0.5">verified_user</span>
+            <span className="material-symbols-outlined text-green-500 text-lg shrink-0 mt-0.5">verified_user</span>
             <p className="text-xs text-green-700">Your payment information is encrypted and stored securely. Bazario never stores full card numbers.</p>
           </div>
         </div>

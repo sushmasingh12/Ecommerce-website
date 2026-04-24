@@ -33,26 +33,18 @@ const footerSections = [
       { label: "Payment Methods", path: "/account/payments" },
     ],
   },
-  {
-    title: "About Bazario",
-    links: [
-      { label: "About Us", path: "/about" },
-      { label: "Blog & Journal", path: "/journal" },
-      { label: "Our Stores", path: "/boutiques" },
-      { label: "Careers", path: "/about" },
-    ],
-  },
+  
 ];
 
 const Footer = () => {
   return (
-    <footer className="bg-[#131921] text-white">
+    <footer className="bg-primary text-white">
       {/* Main footer */}
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-12">
+      <div className="max-w-350 mx-auto px-4 md:px-8 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {footerSections.map((section) => (
             <div key={section.title}>
-              <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-[#FF9F00]">
+              <h3 className="text-sm font-bold uppercase tracking-wider mb-4 text-secondary">
                 {section.title}
               </h3>
               <ul className="space-y-2">
@@ -71,7 +63,7 @@ const Footer = () => {
         {/* Trust badges */}
         <div className="mt-10 pt-8 border-t border-white/10 flex flex-wrap gap-4 items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-[#FF9F00] font-bold text-xl" style={{ fontFamily: 'Sora, sans-serif' }}>
+            <span className="text-secondary font-bold text-xl" style={{ fontFamily: 'Sora, sans-serif' }}>
               baz<span className="text-white">ario</span>
             </span>
             <span className="text-white/30 text-sm">India's Shopping Destination</span>
@@ -83,13 +75,13 @@ const Footer = () => {
             <span>⭐ 1M+ Happy Customers</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="#" aria-label="Follow us on Instagram" className="text-white/40 hover:text-[#FF9F00] transition-colors">
+            <a href="#" aria-label="Follow us on Instagram" className="text-white/40 hover:text-secondary transition-colors">
               <span className="material-symbols-outlined text-lg">photo_camera</span>
             </a>
-            <a href="#" aria-label="Follow us on Facebook" className="text-white/40 hover:text-[#FF9F00] transition-colors">
+            <a href="#" aria-label="Follow us on Facebook" className="text-white/40 hover:text-secondary transition-colors">
               <span className="material-symbols-outlined text-lg">facebook</span>
             </a>
-            <a href="#" aria-label="Follow us on Twitter" className="text-white/40 hover:text-[#FF9F00] transition-colors">
+            <a href="#" aria-label="Follow us on Twitter" className="text-white/40 hover:text-secondary transition-colors">
               <span className="material-symbols-outlined text-lg">brand_awareness</span>
             </a>
           </div>
@@ -97,8 +89,8 @@ const Footer = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="bg-[#0d141c] py-3 px-4">
-        <div className="max-w-[1400px] mx-auto flex flex-wrap gap-4 justify-between items-center text-xs text-white/30">
+      <div className="bg-primary-fixed-dim py-3 px-4">
+        <div className="max-w-350 mx-auto flex flex-wrap gap-4 justify-between items-center text-xs text-white/30">
           <span>© {new Date().getFullYear()} Bazario. All rights reserved.</span>
           <div className="flex gap-4">
             <Link to="/about" className="hover:text-white/60 transition-colors">Privacy Policy</Link>

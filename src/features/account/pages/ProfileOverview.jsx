@@ -7,7 +7,7 @@ import AccountLayout from './Accountlayout';
 
 const InfoRow = ({ label, value }) => (
   <div className="py-3 border-b border-gray-100 last:border-0 flex justify-between items-start gap-4">
-    <span className="text-xs text-gray-500 flex-shrink-0">{label}</span>
+    <span className="text-xs text-gray-500 shrink-0">{label}</span>
     <span className="text-sm font-medium text-gray-800 text-right">{value || '—'}</span>
   </div>
 );
@@ -43,20 +43,20 @@ const ProfileOverview = () => {
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-4">
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#FF9F00]">account_circle</span>
+            <span className="material-symbols-outlined text-secondary">account_circle</span>
             <h2 className="font-bold text-gray-900">Personal Information</h2>
           </div>
           <Link to="/account/profile" className="text-xs text-blue-600 font-semibold hover:underline">Edit</Link>
         </div>
         <div className="flex items-center gap-4 px-5 py-4 border-b border-gray-100">
-          <div className="w-16 h-16 rounded-full bg-[#131921] flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+          <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold shrink-0">
             {user.name[0]}
           </div>
           <div>
             <p className="font-bold text-gray-900">{user.name}</p>
             <p className="text-xs text-gray-500">{user.email}</p>
             <p className="text-xs text-gray-500">{user.phone}</p>
-            <span className="inline-block mt-1 text-[10px] bg-[#FF9F00]/15 text-[#b36b00] font-bold px-2 py-0.5 rounded-full">
+            <span className="inline-block mt-1 text-[10px] bg-secondary/15 text-[#b36b00] font-bold px-2 py-0.5 rounded-full">
               {user.tier}
             </span>
           </div>
@@ -73,7 +73,7 @@ const ProfileOverview = () => {
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[#FF9F00] text-lg">location_on</span>
+              <span className="material-symbols-outlined text-secondary text-lg">location_on</span>
               <h3 className="font-bold text-gray-900 text-sm">Default Address</h3>
             </div>
             <Link to="/account/addresses" className="text-xs text-blue-600 font-semibold hover:underline">Manage</Link>
@@ -92,7 +92,7 @@ const ProfileOverview = () => {
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <span className="material-symbols-outlined text-[#FF9F00] text-lg">payments</span>
+              <span className="material-symbols-outlined text-secondary text-lg">payments</span>
               <h3 className="font-bold text-gray-900 text-sm">Default Payment</h3>
             </div>
             <Link to="/account/payments" className="text-xs text-blue-600 font-semibold hover:underline">Manage</Link>
@@ -128,7 +128,7 @@ const ProfileOverview = () => {
             <Link key={path} to={path}
               className="flex items-center justify-between px-5 py-3.5 hover:bg-gray-50 transition-all group">
               <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-gray-400 text-lg group-hover:text-[#FF9F00] transition-colors">{icon}</span>
+                <span className="material-symbols-outlined text-gray-400 text-lg group-hover:text-secondary transition-colors">{icon}</span>
                 <div>
                   <p className="text-sm font-medium text-gray-800">{label}</p>
                   <p className="text-xs text-gray-400">{desc}</p>

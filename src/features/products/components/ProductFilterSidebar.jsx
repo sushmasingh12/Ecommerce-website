@@ -166,7 +166,7 @@ const ProductFilterSidebar = ({ category: propCategory }) => {
                 <button
                   key={size}
                   onClick={() => handleToggle('sizes', size)}
-                  className={`h-7 min-w-[32px] px-2 border flex items-center justify-center text-[10px] transition-all duration-300 ${
+                  className={`h-7 min-w-8 px-2 border flex items-center justify-center text-[10px] transition-all duration-300 ${
                     isSelected 
                       ? 'border-primary bg-primary text-surface' 
                       : 'border-outline-variant/30 hover:border-primary text-on-surface'

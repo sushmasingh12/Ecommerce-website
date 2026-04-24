@@ -30,8 +30,8 @@ const SignUp = () => {
       </Helmet>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center mb-10">
-          <span className="text-[#FF9F00] font-bold text-4xl" style={{ fontFamily: 'Sora, sans-serif' }}>
-            baz<span className="text-[#131921]">ario</span>
+          <span className="text-secondary font-bold text-4xl" style={{ fontFamily: 'Sora, sans-serif' }}>
+            baz<span className="text-primary">ario</span>
           </span>
         </div>
         <h2 className="text-3xl font-serif text-center text-gray-900 tracking-tight">
@@ -125,7 +125,7 @@ const SignUp = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-4 px-4 border border-transparent text-[10px] uppercase tracking-[0.2em] font-label font-bold text-white bg-black hover:bg-[#131921] focus:outline-none disabled:opacity-50 transition-all duration-300"
+                className="w-full flex justify-center py-4 px-4 border border-transparent text-[10px] uppercase tracking-[0.2em] font-label font-bold text-white bg-black hover:bg-primary focus:outline-none disabled:opacity-50 transition-all duration-300"
               >
                 {isLoading ? 'Creating Account...' : 'Sign Up'}
               </button>

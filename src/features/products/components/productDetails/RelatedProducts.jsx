@@ -27,7 +27,7 @@ const WardrobeCard = ({ product }) => (
       max-w-[320px]
     "
   >
-    <div className="aspect-[3/4] overflow-hidden bg-surface-container mb-4 md:mb-6">
+    <div className="aspect-3/4 overflow-hidden bg-surface-container mb-4 md:mb-6">
       <img
         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
         alt={product.alt || product.name}
@@ -45,7 +45,7 @@ const WardrobeCard = ({ product }) => (
 
 const RelatedGridItem = ({ product }) => (
   <Link to={`/product/${product.id}`} className="group">
-    <div className="aspect-[3/4] overflow-hidden bg-surface-container mb-3 md:mb-4">
+    <div className="aspect-3/4 overflow-hidden bg-surface-container mb-3 md:mb-4">
       <img
         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
         alt={product.alt || product.name}

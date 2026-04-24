@@ -11,7 +11,7 @@ const DEALS = [
 const TrendingShowcase = () => {
   return (
     <section className="py-10 bg-gray-50">
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8">
+      <div className="max-w-350 mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl md:text-2xl font-bold text-gray-900" style={{ fontFamily: 'Sora, sans-serif' }}>
             🔥 Top Deals Today
@@ -25,7 +25,7 @@ const TrendingShowcase = () => {
             <Link key={deal.label} to={deal.link}
               className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
               <img src={deal.img} alt={deal.label} className="w-full h-48 md:h-64 object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent flex flex-col justify-end p-4">
                 <span className="text-white font-bold text-sm md:text-base">{deal.label}</span>
                 <span className="text-xs font-semibold mt-1 px-2 py-0.5 rounded-full w-fit" style={{ backgroundColor: deal.color, color: '#131921' }}>
                   {deal.discount}

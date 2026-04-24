@@ -56,10 +56,10 @@ const CartPage = () => {
                 {/* Product Info */}
                 <div className="flex flex-col sm:flex-row gap-4 p-4">
                   {/* Image + Quantity */}
-                  <div className="w-full sm:w-[120px] flex-shrink-0">
+                  <div className="w-full sm:w-30 shrink-0">
                     <Link
                       to={`/product/${item.id}`}
-                      className="w-full sm:w-[120px] h-[180px] sm:h-[120px] border border-gray-200 rounded overflow-hidden bg-gray-50 flex items-center justify-center"
+                      className="w-full sm:w-30 h-45 sm:h-30 border border-gray-200 rounded overflow-hidden bg-gray-50 flex items-center justify-center"
                     >
                       <img
                         alt={item.name}
@@ -68,7 +68,7 @@ const CartPage = () => {
                       />
                     </Link>
 
-                    <div className="mt-4 w-full sm:w-[112px]">
+                    <div className="mt-4 w-full sm:w-28">
                       <select
                         value={item.quantity}
                         onChange={(e) =>

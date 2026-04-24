@@ -11,8 +11,8 @@ const FEATURES = [
 
 const BrandPhilosophy = () => {
   return (
-    <section className="py-12 bg-[#131921]">
-      <div className="max-w-[1400px] mx-auto px-4 md:px-8">
+    <section className="py-12 bg-primary">
+      <div className="max-w-350 mx-auto px-4 md:px-8">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {FEATURES.map((f) => (
             <div key={f.title} className="flex flex-col items-center text-center p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
