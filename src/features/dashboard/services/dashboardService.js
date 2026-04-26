@@ -4,7 +4,7 @@ export const fetchDashboardData = async () => {
   // Simulate API delay
   await new Promise((resolve) => setTimeout(resolve, 800));
   return {
-    products: getNewArrivals(),
+    products: getNewArrivals(5),
     categories: getCategories(),
   };
 };

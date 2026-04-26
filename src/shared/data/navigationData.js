@@ -31,9 +31,9 @@ export const NAV_DATA = [
     path: '/accessories',
     icon: 'diamond',
     subcategories: [
-      { name: 'Fine Leather Goods', path: '/accessories/leather' },
-      { name: 'Timepieces', path: '/accessories/watches' },
-      { name: 'Eyewear', path: '/accessories/eyewear' },
+      { name: 'Bags', path: '/accessories/bags' },
+      { name: 'watches', path: '/accessories/watches' },
+      { name: 'Jewellery', path: '/accessories/Jewellery' },
     ],
   },
   {

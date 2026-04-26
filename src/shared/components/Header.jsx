@@ -25,7 +25,7 @@ const Header = ({ openSidebar }) => {
   }, []);
 
   const onSubmit = (data) => {
-    if (data.searchQuery.trim()) navigate('/collections');
+    if (data.searchQuery.trim()) navigate(`/search?q=${encodeURIComponent(data.searchQuery.trim())}`);
   };
 
   return (

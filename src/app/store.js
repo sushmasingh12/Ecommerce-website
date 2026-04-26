@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import dashboardReducer from '../features/dashboard/store/dashboardSlice'
+import homeReducer from '../features/dashboard/store/dashboardSlice'
 import productsReducer from '../features/products/store/productsSlice'
 import wishlistReducer from '../features/wishlist/store/wishlistSlice'
 import cartReducer from '../features/cart/store/cartSlice'
@@ -10,7 +10,7 @@ import { saveState } from '../shared/utils/persistence';
 
 export const store = configureStore({
     reducer: {
-        dashboard: dashboardReducer,
+        home: homeReducer,
         products: productsReducer,
         wishlist: wishlistReducer,
         cart: cartReducer,

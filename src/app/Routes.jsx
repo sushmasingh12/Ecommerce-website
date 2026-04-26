@@ -4,7 +4,7 @@ import Layout from './Layout'
 import LoadingScreen from '../shared/components/LoadingScreen';
 
 // Lazy loaded components
-const Dashboard = lazy(() => import('../features/dashboard/pages/Dashboard'));
+const Home = lazy(() => import('../features/dashboard/pages/Dashboard'));
 const ProductsPage = lazy(() => import('../features/products/pages/ProductsPage'));
 const ProductDetailPage = lazy(() => import('../features/products/pages/ProductDetailPage'));
 const WishlistPage = lazy(() => import('../features/wishlist/pages/WishlistPage'));
@@ -33,7 +33,7 @@ const router = createBrowserRouter(
                 <Layout />
             </Suspense>
         }>
-            <Route index element={<Dashboard />} />
+            <Route index element={<Home />} />
 
             {/* Auth */}
             <Route path="signin" element={<SignIn />} />
@@ -59,6 +59,7 @@ const router = createBrowserRouter(
             <Route path="collections" element={<ProductsPage category="collections" />} />
             <Route path="new-arrivals" element={<ProductsPage category="new-arrivals" />} />
             <Route path="exclusive" element={<ProductsPage category="exclusive" />} />
+            <Route path="search" element={<ProductsPage category="search" />} />
 
             {/* Product Detail */}
             <Route path="product/:id" element={<ProductDetailPage />} />

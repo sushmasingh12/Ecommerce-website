@@ -5,7 +5,7 @@ import { fetchDashboardData } from '../services/dashboardService';
 
 export const useDashboard = () => {
   const dispatch = useDispatch();
-  const { products, categories, isLoading, error } = useSelector((state) => state.dashboard);
+  const { products, categories, isLoading, error } = useSelector((state) => state.home);
 
   useEffect(() => {
     const loadData = async () => {
@@ -15,7 +15,7 @@ export const useDashboard = () => {
         dispatch(setProducts(data.products));
         dispatch(setCategories(data.categories));
       } catch (err) {
-        dispatch(setError(err.message || 'Failed to load dashboard data'));
+        dispatch(setError(err.message || 'Failed to load home data'));
       }
     };
 

@@ -11,7 +11,7 @@ import Newsletter from '../components/Newsletter';
 
 import { Helmet } from 'react-helmet-async';
 
-const Dashboard = () => {
+const Home = () => {
   const { products, categories, isLoading, error } = useDashboard();
 
   if (error) {
@@ -25,7 +25,7 @@ const Dashboard = () => {
   return (
     <main className="overflow-x-hidden">
       <Helmet>
-        <title>Bazario | Premium E-commerce Destination</title>
+        <title>Bazario | Home</title>
         <meta name="description" content="Shop the latest trends in fashion and accessories at Bazario. Discover curated collections for men and women." />
       </Helmet>
       {/* Loading overlay for data transitions */}
@@ -62,4 +62,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Home;

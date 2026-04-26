@@ -3,8 +3,26 @@ import { getProductsByCategory, getAllProducts, categories } from '../data/produ
 // Random shuffle helper
 const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
-export const fetchCollectionData = async (category, subcategory = null) => {
+export const fetchCollectionData = async (category, subcategory = null, search = null) => {
   await new Promise(resolve => setTimeout(resolve, 800));
+
+  // ── Search route ──
+  if (category === 'search' && search) {
+    const allProducts = getAllProducts();
+    const results = allProducts.filter(p => 
+      p.name.toLowerCase().includes(search.toLowerCase()) ||
+      p.category.toLowerCase().includes(search.toLowerCase()) ||
+      p.subCategory?.toLowerCase().includes(search.toLowerCase()) ||
+      p.subdesc?.toLowerCase().includes(search.toLowerCase())
+    );
+    return {
+      category: `Search Results: ${search}`,
+      description: results.length > 0 
+        ? `We found ${results.length} products matching your search.`
+        : `No products found for "${search}". Try checking your spelling or using more general terms.`,
+      products: results,
+    };
+  }
 
   // ── Special routes: mix of all categories ──
   if (category === 'collections' || category === 'new-arrivals' || category === 'exclusive') {
@@ -38,7 +56,7 @@ export const fetchCollectionData = async (category, subcategory = null) => {
       'joggers': ['Joggers'],
       'bottomwear': ['Bottomwear'],
       'bags': ['Bags'],
-      'jewelry': ['Jewelry'],
+      'jewellery': ['jewellery'],
       'watches': ['Watches'],
       'belts': ['Belts'],
       'footwear': ['Footwear'],

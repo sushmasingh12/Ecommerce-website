@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCollection, setLoading, setError } from '../store/productsSlice';
 import { fetchCollectionData } from '../services/productsService';
 
-export const useProducts = (category, subcategory) => {
+export const useProducts = (category, subcategory, searchQuery = null) => {
   const dispatch = useDispatch();
   const { currentCollection, isLoading, error } = useSelector((state) => state.products);
 
@@ -13,7 +13,7 @@ export const useProducts = (category, subcategory) => {
     const loadCollection = async () => {
       try {
         dispatch(setLoading(true));
-        const data = await fetchCollectionData(category, subcategory);
+        const data = await fetchCollectionData(category, subcategory, searchQuery);
         dispatch(setCollection(data));
       } catch (err) {
         dispatch(setError(err.message || 'Failed to load collection'));
@@ -21,7 +21,7 @@ export const useProducts = (category, subcategory) => {
     };
 
     loadCollection();
-  }, [dispatch, category, subcategory]);
+  }, [dispatch, category, subcategory, searchQuery]);
 
   return {
     collection: currentCollection,

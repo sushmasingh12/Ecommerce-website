@@ -7,8 +7,8 @@ const initialState = {
   error: null,
 };
 
-const dashboardSlice = createSlice({
-  name: 'dashboard',
+const homeSlice = createSlice({
+  name: 'home',
   initialState,
   reducers: {
     setLoading: (state, action) => {
@@ -28,5 +28,5 @@ const dashboardSlice = createSlice({
   },
 });
 
-export const { setLoading, setProducts, setCategories, setError } = dashboardSlice.actions;
-export default dashboardSlice.reducer;
+export const { setLoading, setProducts, setCategories, setError } = homeSlice.actions;
+export default homeSlice.reducer;

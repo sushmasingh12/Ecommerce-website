@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useProducts } from '../hooks/useProducts';
 import CollectionHeader from '../components/CollectionHeader';
@@ -9,25 +9,32 @@ import ProductFilterSidebar from '../components/ProductFilterSidebar';
 import Pagination from '../components/Pagination';
 import { Helmet } from 'react-helmet-async';
 
-const PRODUCTS_PER_PAGE = 9;
+const PRODUCTS_PER_PAGE = 12;
 
 const ProductsPage = ({ category: propCategory }) => {
   const { category: paramCategory, sub } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchQuery = searchParams.get('q');
+  
   const category = propCategory || paramCategory || 'women';
-  const displayTitle = sub 
-    ? `${sub.charAt(0).toUpperCase() + sub.slice(1)} | Bazario`
-    : `${category.charAt(0).toUpperCase() + category.slice(1)} Collection | Bazario`;
-  const isSpecialCategory = category === 'collections' || category === 'new-arrivals';
-  const { collection, isLoading, error } = useProducts(category, sub);
+  const displayTitle = category === 'search' 
+    ? `Search results for "${searchQuery}" | Bazario`
+    : sub 
+      ? `${sub.charAt(0).toUpperCase() + sub.slice(1)} | Bazario`
+      : `${category.charAt(0).toUpperCase() + category.slice(1)} Collection | Bazario`;
+
+  const isSpecialCategory = category === 'collections' || category === 'new-arrivals' || category === 'search';
+  const { collection, isLoading, error } = useProducts(category, sub, searchQuery);
   const { filters } = useSelector((state) => state.products);
   
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Reset to first page and scroll to top when category or subcategory changes
+  // Reset to first page and scroll to top when category, subcategory or search query changes
   useEffect(() => {
     setCurrentPage(1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [category, sub]);
+  }, [category, sub, searchQuery]);
 
   // Reset to first page when filters change (don't scroll to top for better UX)
   useEffect(() => {
