@@ -36,7 +36,7 @@ const CuratedForYou = () => {
           {rec.edit}
         </p>
 
-        <h4 className="font-serif text-lg md:text-xl italic">
+        <h4 className="font-serif text-lg md:text-xl ">
           {rec.name}
         </h4>
 

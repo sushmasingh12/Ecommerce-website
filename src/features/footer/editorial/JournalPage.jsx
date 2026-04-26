@@ -1,7 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const JournalPage = () => {
+    const { register, handleSubmit, reset } = useForm();
+
+    const onSubmit = (data) => {
+        console.log("Newsletter subscription:", data);
+        alert(`Thank you! Request for ${data.email} has been sent.`);
+        reset();
+    };
+
     return (
         <main className="pt-32 pb-24">
             {/* Hero Section */}
@@ -15,7 +24,7 @@ const JournalPage = () => {
                         The Journal
                     </h1>
 
-                    <p className="max-w-xl font-light italic leading-relaxed text-on-surface-variant">
+                    <p className="max-w-xl font-light  leading-relaxed text-on-surface-variant">
                         A digital chronicle exploring the intersection of craftsmanship,
                         timeless silhouettes, and the philosophy of conscious curation.
                     </p>
@@ -127,7 +136,7 @@ const JournalPage = () => {
                                     Conversation
                                 </span>
 
-                                <h2 className="mt-4 mb-6 font-serif text-3xl italic md:text-4xl">
+                                <h2 className="mt-4 mb-6 font-serif text-3xl  md:text-4xl">
                                     "Luxury is not the absence of imperfection, but the presence
                                     of intent."
                                 </h2>
@@ -221,12 +230,13 @@ const JournalPage = () => {
                                 previews, and invitations to intimate atelier events.
                             </p>
 
-                            <form className="flex flex-col space-y-6">
+                            <form className="flex flex-col space-y-6" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="relative">
                                     <input
                                         type="email"
                                         placeholder="Email Address"
-                                        className="w-full border-b border-outline-variant bg-transparent py-4 font-light italic transition-colors focus:border-primary focus:outline-none"
+                                        {...register("email", { required: true })}
+                                        className="w-full border-b border-outline-variant bg-transparent py-4 font-light  transition-colors focus:border-primary focus:outline-none"
                                     />
                                 </div>
 

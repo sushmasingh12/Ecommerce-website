@@ -47,16 +47,16 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
 
       <aside
         aria-hidden={!isSidebarOpen}
-        className={`fixed inset-y-0 left-0 w-[85%] max-w-[320px] bg-[#fcf9f3] z-100 shadow-2xl border-r border-black/10 flex flex-col p-8 sm:p-10 lg:p-12 overflow-y-auto transition-transform duration-500 ease-in-out ${
+        className={`fixed inset-y-0 left-0 w-[85%] max-w-[320px] bg-primary z-100 shadow-2xl border-r border-white/10 flex flex-col p-8 sm:p-10 lg:p-12 overflow-y-auto transition-transform duration-500 ease-in-out ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         <div className="flex justify-between items-start mb-12">
           <div>
-            <h2 className="font-headline text-2xl tracking-tight text-primary">
+            <h2 className="font-headline text-2xl tracking-tight text-white">
               The Collection
             </h2>
-            <p className="font-label text-xs uppercase tracking-widest text-black/50 mt-1">
+            <p className="font-label text-xs uppercase tracking-widest text-white/50 mt-1">
               Curated Excellence
             </p>
           </div>
@@ -65,7 +65,7 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
             type="button"
             onClick={closeSidebar}
             aria-label="Close sidebar"
-            className="hover:rotate-90 transition-transform duration-500 cursor-pointer text-black/60 hover:text-secondary"
+            className="hover:rotate-90 transition-transform duration-500 cursor-pointer text-white/60 hover:text-secondary"
           >
             <span className="material-symbols-outlined">close</span>
           </button>
@@ -79,7 +79,7 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
               (openCategory === null && activeCategory === category.name);
 
             return (
-              <div key={category.name} className="border-b border-black/5 pb-4 last:border-0">
+              <div key={category.name} className="border-b border-white/10 pb-4 last:border-0">
                 <div
                   className="flex items-center justify-between cursor-pointer group mb-2"
                   onClick={() => hasSub ? toggleCategory(category.name) : closeSidebar()}
@@ -88,7 +88,7 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
                     {category.icon && (
                       <span
                         className={`material-symbols-outlined text-lg ${
-                          isOpen ? 'text-secondary' : 'text-black/60'
+                          isOpen ? 'text-secondary' : 'text-white/50'
                         }`}
                       >
                         {category.icon}
@@ -100,7 +100,7 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
                         className={`font-label text-xs uppercase tracking-[0.2em] transition-colors ${
                           isOpen
                             ? 'text-secondary font-bold'
-                            : 'text-black/80 group-hover:text-black'
+                            : 'text-white/80 group-hover:text-white'
                         }`}
                       >
                         {category.name}
@@ -109,7 +109,7 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
                       <Link
                         to={category.path}
                         onClick={closeSidebar}
-                        className="font-label text-xs uppercase tracking-[0.2em] text-black/80 hover:text-black"
+                        className="font-label text-xs uppercase tracking-[0.2em] text-white/80 hover:text-white"
                       >
                         {category.name}
                       </Link>
@@ -119,7 +119,7 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
                   {hasSub && (
                     <span
                       className={`material-symbols-outlined text-sm transition-transform duration-300 ${
-                        isOpen ? 'rotate-180 text-secondary' : 'text-black/40'
+                        isOpen ? 'rotate-180 text-secondary' : 'text-white/30'
                       }`}
                     >
                       expand_more
@@ -142,7 +142,7 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
                             className={`font-body text-sm font-light transition-all duration-300 block hover:translate-x-2 ${
                               location.pathname === sub.path
                                 ? 'text-secondary font-medium'
-                                : 'text-black/60 hover:text-black'
+                                : 'text-white/60 hover:text-white'
                             }`}
                           >
                             {sub.name}
@@ -158,19 +158,19 @@ const Sidebar = ({ isSidebarOpen, closeSidebar }) => {
         </div>
 
         <div className="mt-auto pt-14">
-          <div className="bg-surface-container-low p-6 flex flex-col items-start gap-4 border border-black/5">
+          <div className="bg-primary-container p-6 flex flex-col items-start gap-4 border border-white/10">
             <span className="font-label text-[10px] uppercase tracking-widest text-secondary font-bold">
               Limited Release
             </span>
 
-            <p className="font-headline text-lg italic leading-tight text-primary">
+            <p className="font-headline text-lg leading-tight text-white">
               The Autumnal Silk Collection is now live.
             </p>
 
             <Link
               to="/collections"
               onClick={closeSidebar}
-              className="bg-primary text-white px-6 py-3 font-label text-[10px] uppercase tracking-widest hover:bg-secondary transition-colors"
+              className="bg-secondary text-primary px-6 py-3 font-label text-[10px] uppercase tracking-widest font-bold hover:bg-secondary-container transition-colors"
             >
               View Lookbook
             </Link>

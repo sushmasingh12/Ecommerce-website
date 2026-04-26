@@ -58,7 +58,7 @@ const AboutPage = () => {
                             spirit.
                         </p>
 
-                        <p className="border-l border-secondary pl-6 text-lg italic leading-relaxed text-on-surface/80 font-body">
+                        <p className="border-l border-secondary pl-6 text-lg  leading-relaxed text-on-surface/80 font-body">
                             "Luxury is not loud; it is the quiet confidence of quality and the
                             space we allow for things that truly matter."
                         </p>

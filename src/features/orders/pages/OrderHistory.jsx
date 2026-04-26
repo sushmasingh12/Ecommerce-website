@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { selectOrders } from '../store/orderSlice';
 
 const OrderHistory = () => {
@@ -9,9 +10,9 @@ const OrderHistory = () => {
     <main className="pt-32 pb-24 px-6 md:px-12 lg:px-24 max-w-480 mx-auto w-full grow min-h-screen">
       {/* Breadcrumb */}
       <nav className="flex mb-12 text-[10px] uppercase tracking-[0.2em] font-label text-gray-400">
-        <a className="hover:text-black transition-colors" href="/">Home</a>
+        <Link className="hover:text-black transition-colors" to="/">Home</Link>
         <span className="mx-3">/</span>
-        <a className="hover:text-black transition-colors" href="/account">Account</a>
+        <Link className="hover:text-black transition-colors" to="/account">Account</Link>
         <span className="mx-3">/</span>
         <span className="text-secondary font-bold">Order History</span>
       </nav>
@@ -89,9 +90,9 @@ const OrderHistory = () => {
         <p className="text-gray-600 font-body max-w-md mb-10 leading-relaxed text-sm">
           Our concierge is available to discuss your orders, returns, or styling needs.
         </p>
-        <a className="border-b border-black pb-1 text-[10px] uppercase tracking-[0.3em] font-bold text-black hover:text-secondary hover:border-secondary transition-all" href="/contact">
+        <Link className="border-b border-black pb-1 text-[10px] uppercase tracking-[0.3em] font-bold text-black hover:text-secondary hover:border-secondary transition-all" to="/contact">
           Contact Atelier Support
-        </a>
+        </Link>
       </div>
     </main>
   );

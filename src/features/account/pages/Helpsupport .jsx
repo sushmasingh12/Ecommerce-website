@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import AccountLayout from './Accountlayout';
 
 const FAQS = [
@@ -22,13 +23,27 @@ const CATEGORIES = [
 
 const HelpSupport = () => {
   const [openFaq, setOpenFaq]   = useState(null);
-  const [query, setQuery]       = useState('');
   const [sent, setSent]         = useState(false);
   const [activeTab, setActiveTab] = useState('faq');
 
+  const { register: registerSearch, watch: watchSearch } = useForm({
+    defaultValues: { query: '' }
+  });
+
+  const { register: registerContact, handleSubmit: handleSubmitContact, reset: resetContact } = useForm({
+    defaultValues: { category: CATEGORIES[0].label, orderId: '', message: '' }
+  });
+
+  const searchQuery = watchSearch('query');
+
   const filteredFaqs = FAQS.filter(f =>
-    query === '' || f.q.toLowerCase().includes(query.toLowerCase())
+    searchQuery === '' || f.q.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const onContactSubmit = (data) => {
+    console.log("Contact form submission:", data);
+    setSent(true);
+  };
 
   return (
     <AccountLayout>
@@ -43,7 +58,7 @@ const HelpSupport = () => {
         </div>
         {/* Search */}
         <div className="flex gap-2">
-          <input value={query} onChange={e => setQuery(e.target.value)}
+          <input {...registerSearch('query')}
             placeholder="Search for help topics..."
             className="flex-1 px-4 py-2.5 rounded-lg text-sm bg-white/10 text-white placeholder:text-white/40 border border-white/10 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary" />
           <button className="px-5 py-2.5 bg-secondary text-primary rounded-lg text-sm font-bold">
@@ -87,7 +102,7 @@ const HelpSupport = () => {
           {activeTab === 'faq' && (
             <div className="space-y-2">
               {filteredFaqs.length === 0 ? (
-                <p className="text-center py-8 text-gray-400 text-sm">No results for "{query}"</p>
+                <p className="text-center py-8 text-gray-400 text-sm">No results for "{searchQuery}"</p>
               ) : filteredFaqs.map((faq, i) => (
                 <div key={i} className="border border-gray-100 rounded-xl overflow-hidden">
                   <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -137,31 +152,31 @@ const HelpSupport = () => {
                   <span className="material-symbols-outlined text-5xl text-green-400">check_circle</span>
                   <p className="font-bold text-gray-900 mt-3">Message Sent!</p>
                   <p className="text-sm text-gray-500 mt-1">Our team will respond within 24 hours.</p>
-                  <button onClick={() => setSent(false)} className="mt-4 text-sm text-blue-600 hover:underline">Send another message</button>
+                  <button onClick={() => { setSent(false); resetContact(); }} className="mt-4 text-sm text-blue-600 hover:underline">Send another message</button>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <form onSubmit={handleSubmitContact(onContactSubmit)} className="space-y-4">
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Issue Category</label>
-                    <select className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary">
+                    <select {...registerContact('category')} className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary">
                       {CATEGORIES.map(c => <option key={c.label}>{c.label}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Order ID (optional)</label>
-                    <input placeholder="e.g. BZ-20241201"
+                    <input {...registerContact('orderId')} placeholder="e.g. BZ-20241201"
                       className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Describe Your Issue</label>
-                    <textarea rows={4} placeholder="Tell us what happened..."
+                    <textarea {...registerContact('message', { required: true })} rows={4} placeholder="Tell us what happened..."
                       className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary resize-none" />
                   </div>
-                  <button onClick={() => setSent(true)}
+                  <button type="submit"
                     className="w-full py-3 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-container transition-all">
                     Submit Request
                   </button>
-                </div>
+                </form>
               )}
             </div>
           )}

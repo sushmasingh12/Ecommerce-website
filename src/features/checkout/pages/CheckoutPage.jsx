@@ -1,10 +1,31 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { useCart } from '../../cart/hooks/useCart';
 
 const CheckoutPage = () => {
   const { items, total, clearCart } = useCart();
   const navigate = useNavigate();
+
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      address: '',
+      city: '',
+      postalCode: '',
+      deliveryMethod: 'standard',
+      includePackaging: false,
+      giftMessage: '',
+      paymentMethod: 'card',
+      cardNumber: '',
+      expiryDate: '',
+      cvv: ''
+    }
+  });
+
+  const deliveryMethod = watch('deliveryMethod');
+  const paymentMethod = watch('paymentMethod');
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-IN', {
@@ -14,36 +35,17 @@ const CheckoutPage = () => {
     }).format(price);
   };
 
-  // Form States
-  const [shippingInfo, setShippingInfo] = useState({
-    firstName: '',
-    lastName: '',
-    address: '',
-    city: '',
-    postalCode: ''
-  });
-
-  const [deliveryMethod, setDeliveryMethod] = useState('standard');
-  const [giftServices, setGiftServices] = useState({
-    includePackaging: false,
-    message: ''
-  });
-  const [paymentMethod, setPaymentMethod] = useState('card');
-
   // Calculations
   const subtotal = total;
   const shippingCost = deliveryMethod === 'express' ? 3000 : 0;
   const tax = subtotal * 0.18; // GST 18%
   const finalTotal = subtotal + shippingCost + tax;
 
-  const handlePlaceOrder = () => {
+  const onSubmit = (data) => {
     // Mock order placement
     console.log('Order Placed:', {
       items,
-      shippingInfo,
-      deliveryMethod,
-      giftServices,
-      paymentMethod,
+      ...data,
       finalTotal
     });
     alert('Thank you for your order! Your acquisition is being prepared.');
@@ -56,11 +58,11 @@ const CheckoutPage = () => {
       <div className="mb-16">
         <h1 className="font-headline text-5xl md:text-6xl tracking-tight leading-tight">Checkout</h1>
         <p className="font-label text-xs tracking-widest uppercase mt-4 text-on-surface-variant/60">
-          Secure Transaction · CURATOR House India
+          Secure Transaction ·
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
         {/* Left Column: Flow */}
         <div className="lg:col-span-7 space-y-20">
           
@@ -74,51 +76,46 @@ const CheckoutPage = () => {
               <div className="flex flex-col gap-2">
                 <label className="font-label text-[10px] tracking-widest uppercase text-on-surface-variant/60 font-bold">First Name</label>
                 <input 
-                  className="bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm placeholder:text-outline-variant focus:border-primary outline-none transition-colors" 
+                  className={`bg-transparent border-b py-2 font-body text-sm placeholder:text-outline-variant focus:border-primary outline-none transition-colors ${errors.firstName ? 'border-red-500' : 'border-outline-variant/30'}`} 
                   placeholder="Aarav" 
                   type="text"
-                  value={shippingInfo.firstName}
-                  onChange={(e) => setShippingInfo({...shippingInfo, firstName: e.target.value})}
+                  {...register('firstName', { required: true })}
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-label text-[10px] tracking-widest uppercase text-on-surface-variant/60 font-bold">Last Name</label>
                 <input 
-                  className="bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm placeholder:text-outline-variant focus:border-primary outline-none transition-colors" 
+                  className={`bg-transparent border-b py-2 font-body text-sm placeholder:text-outline-variant focus:border-primary outline-none transition-colors ${errors.lastName ? 'border-red-500' : 'border-outline-variant/30'}`} 
                   placeholder="Sharma" 
                   type="text"
-                  value={shippingInfo.lastName}
-                  onChange={(e) => setShippingInfo({...shippingInfo, lastName: e.target.value})}
+                  {...register('lastName', { required: true })}
                 />
               </div>
               <div className="md:col-span-2 flex flex-col gap-2">
                 <label className="font-label text-[10px] tracking-widest uppercase text-on-surface-variant/60 font-bold">Street Address</label>
                 <input 
-                  className="bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm placeholder:text-outline-variant focus:border-primary outline-none transition-colors" 
+                  className={`bg-transparent border-b py-2 font-body text-sm placeholder:text-outline-variant focus:border-primary outline-none transition-colors ${errors.address ? 'border-red-500' : 'border-outline-variant/30'}`} 
                   placeholder="12, Lodhi Road, Diplomatic Enclave" 
                   type="text"
-                  value={shippingInfo.address}
-                  onChange={(e) => setShippingInfo({...shippingInfo, address: e.target.value})}
+                  {...register('address', { required: true })}
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-label text-[10px] tracking-widest uppercase text-on-surface-variant/60 font-bold">City</label>
                 <input 
-                  className="bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm placeholder:text-outline-variant focus:border-primary outline-none transition-colors" 
+                  className={`bg-transparent border-b py-2 font-body text-sm placeholder:text-outline-variant focus:border-primary outline-none transition-colors ${errors.city ? 'border-red-500' : 'border-outline-variant/30'}`} 
                   placeholder="New Delhi" 
                   type="text"
-                  value={shippingInfo.city}
-                  onChange={(e) => setShippingInfo({...shippingInfo, city: e.target.value})}
+                  {...register('city', { required: true })}
                 />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-label text-[10px] tracking-widest uppercase text-on-surface-variant/60 font-bold">Postal Code</label>
                 <input 
-                  className="bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm placeholder:text-outline-variant focus:border-primary outline-none transition-colors" 
+                  className={`bg-transparent border-b py-2 font-body text-sm placeholder:text-outline-variant focus:border-primary outline-none transition-colors ${errors.postalCode ? 'border-red-500' : 'border-outline-variant/30'}`} 
                   placeholder="110003" 
                   type="text"
-                  value={shippingInfo.postalCode}
-                  onChange={(e) => setShippingInfo({...shippingInfo, postalCode: e.target.value})}
+                  {...register('postalCode', { required: true })}
                 />
               </div>
             </div>
@@ -141,14 +138,12 @@ const CheckoutPage = () => {
                   className={`group flex items-center justify-between p-6 cursor-pointer transition-all duration-300 border ${
                     deliveryMethod === method.id ? 'bg-primary/5 border-primary' : 'border-outline-variant/30 hover:bg-surface-container'
                   }`}
-                  onClick={() => setDeliveryMethod(method.id)}
                 >
                   <div className="flex items-center gap-4">
                     <input 
                       type="radio"
-                      name="delivery"
-                      checked={deliveryMethod === method.id}
-                      onChange={() => setDeliveryMethod(method.id)}
+                      value={method.id}
+                      {...register('deliveryMethod')}
                       className="text-primary focus:ring-0 w-4 h-4 accent-primary"
                     />
                     <div className="flex flex-col">
@@ -173,8 +168,7 @@ const CheckoutPage = () => {
                 <input 
                   id="gift_wrap" 
                   type="checkbox"
-                  checked={giftServices.includePackaging}
-                  onChange={(e) => setGiftServices({...giftServices, includePackaging: e.target.checked})}
+                  {...register('includePackaging')}
                   className="mt-1 text-primary focus:ring-0 accent-primary" 
                 />
                 <div>
@@ -190,8 +184,7 @@ const CheckoutPage = () => {
                   className="bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm resize-none placeholder:text-outline-variant outline-none focus:border-primary transition-colors" 
                   placeholder="Enter your gift message here..." 
                   rows="3"
-                  value={giftServices.message}
-                  onChange={(e) => setGiftServices({...giftServices, message: e.target.value})}
+                  {...register('giftMessage')}
                 ></textarea>
               </div>
             </div>
@@ -205,7 +198,8 @@ const CheckoutPage = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
               <button 
-                onClick={() => setPaymentMethod('card')}
+                type="button"
+                onClick={() => setValue('paymentMethod', 'card')}
                 className={`flex items-center justify-center gap-2 p-4 transition-all duration-300 ${
                   paymentMethod === 'card' ? 'bg-primary text-surface' : 'border border-outline-variant/30 hover:bg-surface-container'
                 }`}
@@ -214,7 +208,8 @@ const CheckoutPage = () => {
                 <span className="font-label text-xs uppercase tracking-widest">Credit/Debit Card</span>
               </button>
               <button 
-                onClick={() => setPaymentMethod('upi')}
+                type="button"
+                onClick={() => setValue('paymentMethod', 'upi')}
                 className={`flex items-center justify-center gap-2 p-4 transition-all duration-300 ${
                   paymentMethod === 'upi' ? 'bg-primary text-surface' : 'border border-outline-variant/30 hover:bg-surface-container'
                 }`}
@@ -229,18 +224,33 @@ const CheckoutPage = () => {
                 <div className="flex flex-col gap-2">
                   <label className="font-label text-[10px] tracking-widest uppercase text-on-surface-variant/60 font-bold">Card Number</label>
                   <div className="relative">
-                    <input className="w-full bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm tracking-[0.2em] outline-none focus:border-primary" placeholder="**** **** **** 4421" type="text"/>
+                    <input 
+                      className="w-full bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm tracking-[0.2em] outline-none focus:border-primary" 
+                      placeholder="**** **** **** 4421" 
+                      type="text"
+                      {...register('cardNumber')}
+                    />
                     <span className="absolute right-0 bottom-2 material-symbols-outlined text-outline-variant">lock</span>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-8">
                   <div className="flex flex-col gap-2">
                     <label className="font-label text-[10px] tracking-widest uppercase text-on-surface-variant/60 font-bold">Expiry Date</label>
-                    <input className="bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm outline-none focus:border-primary" placeholder="MM / YY" type="text"/>
+                    <input 
+                      className="bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm outline-none focus:border-primary" 
+                      placeholder="MM / YY" 
+                      type="text"
+                      {...register('expiryDate')}
+                    />
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="font-label text-[10px] tracking-widest uppercase text-on-surface-variant/60 font-bold">CVV</label>
-                    <input className="bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm outline-none focus:border-primary" placeholder="000" type="password"/>
+                    <input 
+                      className="bg-transparent border-b border-outline-variant/30 py-2 font-body text-sm outline-none focus:border-primary" 
+                      placeholder="000" 
+                      type="password"
+                      {...register('cvv')}
+                    />
                   </div>
                 </div>
               </div>
@@ -295,8 +305,8 @@ const CheckoutPage = () => {
               <div className="mb-12">
                 <label className="font-label text-[10px] tracking-widest uppercase text-on-surface-variant/60 block mb-2 font-bold">Promo Code</label>
                 <div className="flex border-b border-outline-variant/30">
-                  <input className="grow bg-transparent py-2 font-body text-sm border-none focus:ring-0 outline-none" placeholder="CURATOR10" type="text"/>
-                  <button className="font-label text-[10px] tracking-widest uppercase px-4 hover:text-secondary transition-colors font-bold">Apply</button>
+                  <input className="grow bg-transparent py-2 font-body text-sm border-none focus:ring-0 outline-none" placeholder="QWERSD12" type="text"/>
+                  <button type="button" className="font-label text-[10px] tracking-widest uppercase px-4 hover:text-secondary transition-colors font-bold">Apply</button>
                 </div>
               </div>
 
@@ -321,7 +331,7 @@ const CheckoutPage = () => {
               </div>
 
               <button 
-                onClick={handlePlaceOrder}
+                type="submit"
                 disabled={items.length === 0}
                 className={`w-full mt-12 py-6 font-label text-xs tracking-[0.3em] uppercase font-bold transition-all duration-500 shadow-xl active:scale-[0.98] ${
                   items.length > 0 ? 'bg-primary text-surface hover:opacity-90' : 'bg-outline-variant/10 text-on-surface-variant/30 cursor-not-allowed shadow-none'
@@ -332,12 +342,12 @@ const CheckoutPage = () => {
             </div>
             <div className="px-8 text-center text-on-surface-variant/40 mt-8">
               <p className="font-body text-[10px] leading-relaxed tracking-tight">
-                By placing this order, you agree to CURATOR House's <a className="underline hover:text-primary" href="#">General Terms of Sale</a> and <a className="underline hover:text-primary" href="#">Privacy Policy</a>.
+                By placing this order, you agree to Bazario House's <Link className="underline hover:text-primary" to="#">General Terms of Sale</Link> and <Link className="underline hover:text-primary" to="#">Privacy Policy</Link>.
               </p>
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </main>
   );
 };

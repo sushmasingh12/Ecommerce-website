@@ -9,7 +9,7 @@ const getInitialWishlistItems = () => {
   return shuffled.slice(0, 4).map((p) => ({
     id: p.id,
     name: p.name,
-    brand: p.material || 'The Curator',
+    brand: p.material || 'The Bazario',
     price: `₹${new Intl.NumberFormat('en-IN').format(p.price)}`,
     image: p.image,
     alt: p.alt || p.name,

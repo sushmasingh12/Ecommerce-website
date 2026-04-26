@@ -90,9 +90,9 @@ const SignIn = () => {
               </div>
 
               <div className="text-[10px] uppercase tracking-widest font-label font-bold">
-                <a href="#" className="text-gray-400 hover:text-black transition-colors">
+                <Link to="#" className="text-gray-400 hover:text-black transition-colors">
                   Forgot password?
-                </a>
+                </Link>
               </div>
             </div>
 

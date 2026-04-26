@@ -4,7 +4,7 @@ const ReviewStat = ({ label, status, percentage, quote }) => (
   <div className="space-y-4">
     <div className="flex items-center justify-between">
       <span className="text-[10px] uppercase tracking-widest font-bold">{label}</span>
-      <span className="text-xs font-serif italic text-secondary">{status}</span>
+      <span className="text-xs font-serif  text-secondary">{status}</span>
     </div>
     <div className="w-full h-px bg-outline-variant/30 relative">
       <div 
@@ -12,7 +12,7 @@ const ReviewStat = ({ label, status, percentage, quote }) => (
         style={{ width: `${percentage}%` }}
       ></div>
     </div>
-    <p className="text-xs text-on-surface-variant italic">{quote}</p>
+    <p className="text-xs text-on-surface-variant ">{quote}</p>
   </div>
 );
 
@@ -35,7 +35,7 @@ const AIReviewSummary = ({ summary }) => {
             {summary.versatility && <ReviewStat {...summary.versatility} />}
           </div>
         ) : (
-          <p className="text-lg font-serif italic text-on-surface-variant leading-relaxed max-w-2xl">
+          <p className="text-lg font-serif  text-on-surface-variant leading-relaxed max-w-2xl">
             {typeof summary === 'string' ? summary : 'No summary available.'}
           </p>
         )}

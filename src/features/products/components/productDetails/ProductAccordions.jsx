@@ -122,7 +122,7 @@ const ProductAccordions = ({ product }) => {
             The Artisan's Note
             <span className="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
           </summary>
-          <div className="pt-4 text-xs italic font-serif leading-relaxed text-on-surface-variant">
+          <div className="pt-4 text-xs  font-serif leading-relaxed text-on-surface-variant">
             {product.artisanNote}
           </div>
         </details>

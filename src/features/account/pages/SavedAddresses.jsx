@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { selectAddresses, addAddress, removeAddress, setDefaultAddress } from '../store/accountSlice';
 import AccountLayout from './Accountlayout';
 
@@ -7,65 +8,70 @@ const EMPTY = { type: 'Home', name: '', phone: '', flat: '', area: '', city: '',
 const STATES = ['Uttar Pradesh','Delhi','Maharashtra','Karnataka','Tamil Nadu','West Bengal','Haryana','Gujarat','Telangana','Rajasthan'];
 
 const AddressForm = ({ initial = EMPTY, onSave, onCancel }) => {
-  const [form, setForm] = useState(initial);
-  const h = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
+    defaultValues: initial
+  });
+
+  const addressType = watch('type');
+
   return (
-    <div className="bg-blue-50 border border-blue-100 rounded-xl p-5 mt-4">
+    <form onSubmit={handleSubmit(onSave)} className="bg-blue-50 border border-blue-100 rounded-xl p-5 mt-4">
       <h3 className="font-bold text-gray-900 mb-4 text-sm">Add New Address</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {/* Type */}
         <div className="sm:col-span-2 flex gap-2">
           {['Home','Work','Other'].map(t => (
-            <button key={t} onClick={() => setForm(f => ({ ...f, type: t }))}
+            <button key={t} type="button" onClick={() => setValue('type', t)}
               className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                form.type === t ? 'bg-primary text-white border-primary' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
+                addressType === t ? 'bg-primary text-white border-primary' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-400'
               }`}>
               {t}
             </button>
           ))}
         </div>
         {[
-          { label: 'Full Name', name: 'name', full: false },
-          { label: 'Phone Number', name: 'phone', full: false },
-          { label: 'Flat / House / Apartment', name: 'flat', full: true },
-          { label: 'Area / Colony / Street', name: 'area', full: true },
-          { label: 'City', name: 'city', full: false },
-          { label: 'Pin Code', name: 'pincode', full: false },
-        ].map(({ label, name, full }) => (
+          { label: 'Full Name', name: 'name', full: false, required: true },
+          { label: 'Phone Number', name: 'phone', full: false, required: true },
+          { label: 'Flat / House / Apartment', name: 'flat', full: true, required: true },
+          { label: 'Area / Colony / Street', name: 'area', full: true, required: true },
+          { label: 'City', name: 'city', full: false, required: true },
+          { label: 'Pin Code', name: 'pincode', full: false, required: true },
+        ].map(({ label, name, full, required }) => (
           <div key={name} className={full ? 'sm:col-span-2' : ''}>
             <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">{label}</label>
-            <input name={name} value={form[name]} onChange={h}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white" />
+            <input {...register(name, { required: required ? "Required" : false })}
+              className={`w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white ${errors[name] ? 'border-red-500' : 'border-gray-200'}`} />
+            {errors[name] && <p className="text-[10px] text-red-500 mt-1">{errors[name].message}</p>}
           </div>
         ))}
         {/* State */}
         <div>
           <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">State</label>
-          <select name="state" value={form.state} onChange={h}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white">
+          <select {...register('state', { required: "Required" })}
+            className={`w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white ${errors.state ? 'border-red-500' : 'border-gray-200'}`}>
             <option value="">Select State</option>
             {STATES.map(s => <option key={s}>{s}</option>)}
           </select>
+          {errors.state && <p className="text-[10px] text-red-500 mt-1">{errors.state.message}</p>}
         </div>
         {/* Default */}
         <div className="sm:col-span-2 flex items-center gap-2 mt-1">
-          <input type="checkbox" id="default" checked={form.isDefault}
-            onChange={e => setForm(f => ({ ...f, isDefault: e.target.checked }))}
+          <input type="checkbox" id="default" {...register('isDefault')}
             className="accent-secondary w-4 h-4" />
           <label htmlFor="default" className="text-sm text-gray-700">Set as default address</label>
         </div>
       </div>
       <div className="flex gap-2 mt-4">
-        <button onClick={() => onSave(form)}
+        <button type="submit"
           className="px-5 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-container transition-all">
           Save Address
         </button>
-        <button onClick={onCancel}
+        <button type="button" onClick={onCancel}
           className="px-5 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-all">
           Cancel
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 

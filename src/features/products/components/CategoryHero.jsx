@@ -24,7 +24,7 @@ const CategoryHero = ({ category = 'women' }) => {
             {slide.subtitle}
           </span>
 
-          <h1 className="font-serif italic text-4xl md:text-6xl lg:text-7xl leading-none mb-5">
+          <h1 className="font-serif  text-4xl md:text-6xl lg:text-7xl leading-none mb-5">
             {slide.title}
           </h1>
 

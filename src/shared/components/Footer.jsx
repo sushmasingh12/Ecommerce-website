@@ -75,15 +75,15 @@ const Footer = () => {
             <span>⭐ 1M+ Happy Customers</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="#" aria-label="Follow us on Instagram" className="text-white/40 hover:text-secondary transition-colors">
+            <Link to="#" aria-label="Follow us on Instagram" className="text-white/40 hover:text-secondary transition-colors">
               <span className="material-symbols-outlined text-lg">photo_camera</span>
-            </a>
-            <a href="#" aria-label="Follow us on Facebook" className="text-white/40 hover:text-secondary transition-colors">
+            </Link>
+            <Link to="#" aria-label="Follow us on Facebook" className="text-white/40 hover:text-secondary transition-colors">
               <span className="material-symbols-outlined text-lg">facebook</span>
-            </a>
-            <a href="#" aria-label="Follow us on Twitter" className="text-white/40 hover:text-secondary transition-colors">
+            </Link>
+            <Link to="#" aria-label="Follow us on Twitter" className="text-white/40 hover:text-secondary transition-colors">
               <span className="material-symbols-outlined text-lg">brand_awareness</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

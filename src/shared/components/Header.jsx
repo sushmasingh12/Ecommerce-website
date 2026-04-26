@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { useCart } from '../../features/cart/hooks/useCart';
 import { NAV_DATA } from '../data/navigationData';
 import AccountDropdown from '../../features/account/components/AccountDropdown';
@@ -7,10 +8,11 @@ import AccountDropdown from '../../features/account/components/AccountDropdown';
 const Header = ({ openSidebar }) => {
   const { toggleDrawer, count } = useCart();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { register, handleSubmit } = useForm();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -22,9 +24,8 @@ const Header = ({ openSidebar }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (searchQuery.trim()) navigate('/collections');
+  const onSubmit = (data) => {
+    if (data.searchQuery.trim()) navigate('/collections');
   };
 
   return (
@@ -45,10 +46,9 @@ const Header = ({ openSidebar }) => {
           </Link>
 
           {/* Search bar - prominent like Amazon/Flipkart */}
-          <form onSubmit={handleSearch} className="flex-1 flex max-w-3xl">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex-1 flex max-w-3xl">
             <input
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
+              {...register('searchQuery')}
               className="flex-1 py-2.5 px-4 text-sm text-gray-800 bg-white rounded-l-full focus:outline-none focus:ring-2 focus:ring-secondary border-0"
               placeholder="Search products, brands, categories..."
               type="text"

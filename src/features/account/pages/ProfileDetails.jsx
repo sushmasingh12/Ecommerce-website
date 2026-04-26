@@ -1,33 +1,53 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { selectUser, updateProfile } from '../store/accountSlice';
 import AccountLayout from './Accountlayout';
 
-const Field = ({ label, name, value, onChange, type = 'text', options }) => (
+const Field = ({ label, name, register, validation, type = 'text', options, error }) => (
   <div>
     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">{label}</label>
     {options ? (
-      <select name={name} value={value} onChange={onChange}
+      <select {...register(name, validation)}
         className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent bg-white">
         {options.map(o => <option key={o}>{o}</option>)}
       </select>
     ) : (
-      <input type={type} name={name} value={value} onChange={onChange}
-        className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent" />
+      <input type={type} {...register(name, validation)}
+        className={`w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent ${error ? 'border-red-500' : 'border-gray-200'}`} />
     )}
+    {error && <p className="text-[10px] text-red-500 mt-1">{error.message}</p>}
   </div>
 );
 
 const ProfileDetails = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const [form, setForm]     = useState({ ...user });
   const [saved, setSaved]   = useState(false);
-  const [pwForm, setPwForm] = useState({ current: '', newPw: '', confirm: '' });
   const [pwSaved, setPwSaved] = useState(false);
 
-  const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-  const handleSave = () => { dispatch(updateProfile(form)); setSaved(true); setTimeout(() => setSaved(false), 2500); };
+  const { register: registerProfile, handleSubmit: handleSubmitProfile, formState: { errors: profileErrors } } = useForm({
+    defaultValues: { ...user }
+  });
+
+  const { register: registerPw, handleSubmit: handleSubmitPw, watch: watchPw, formState: { errors: pwErrors }, reset: resetPw } = useForm({
+    defaultValues: { current: '', newPw: '', confirm: '' }
+  });
+
+  const newPw = watchPw('newPw');
+
+  const onProfileSubmit = (data) => {
+    dispatch(updateProfile(data));
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2500);
+  };
+
+  const onPwSubmit = (data) => {
+    console.log("Password change request:", data);
+    setPwSaved(true);
+    resetPw();
+    setTimeout(() => setPwSaved(false), 2500);
+  };
 
   return (
     <AccountLayout>
@@ -49,26 +69,28 @@ const ProfileDetails = () => {
           </div>
         </div>
 
-        <div className="px-5 py-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Field label="Full Name"    name="name"      value={form.name}      onChange={handleChange} />
-          <Field label="Legal Name"   name="legalName" value={form.legalName} onChange={handleChange} />
-          <Field label="Email Address" name="email"    value={form.email}     onChange={handleChange} type="email" />
-          <Field label="Phone Number" name="phone"     value={form.phone}     onChange={handleChange} type="tel" />
-          <Field label="Gender"       name="gender"    value={form.gender}    onChange={handleChange}
-            options={['Male', 'Female', 'Other', 'Prefer not to say']} />
-          <Field label="Date of Birth" name="dob"      value={form.dob}       onChange={handleChange} />
-          <Field label="Preferred Language" name="language" value={form.language} onChange={handleChange}
-            options={['English', 'Hindi', 'Tamil', 'Telugu', 'Bengali', 'Marathi']} />
-        </div>
+        <form onSubmit={handleSubmitProfile(onProfileSubmit)}>
+          <div className="px-5 py-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Field label="Full Name"    name="name"      register={registerProfile} validation={{ required: "Required" }} error={profileErrors.name} />
+            <Field label="Legal Name"   name="legalName" register={registerProfile} error={profileErrors.legalName} />
+            <Field label="Email Address" name="email"    register={registerProfile} validation={{ required: "Required", pattern: { value: /^\S+@\S+$/i, message: "Invalid email" } }} type="email" error={profileErrors.email} />
+            <Field label="Phone Number" name="phone"     register={registerProfile} type="tel" error={profileErrors.phone} />
+            <Field label="Gender"       name="gender"    register={registerProfile}
+              options={['Male', 'Female', 'Other', 'Prefer not to say']} error={profileErrors.gender} />
+            <Field label="Date of Birth" name="dob"      register={registerProfile} error={profileErrors.dob} />
+            <Field label="Preferred Language" name="language" register={registerProfile}
+              options={['English', 'Hindi', 'Tamil', 'Telugu', 'Bengali', 'Marathi']} error={profileErrors.language} />
+          </div>
 
-        <div className="px-5 pb-5">
-          <button onClick={handleSave}
-            className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${
-              saved ? 'bg-green-500 text-white' : 'bg-primary text-white hover:bg-primary-container'
-            }`}>
-            {saved ? '✓ Changes Saved' : 'Save Changes'}
-          </button>
-        </div>
+          <div className="px-5 pb-5">
+            <button type="submit"
+              className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${
+                saved ? 'bg-green-500 text-white' : 'bg-primary text-white hover:bg-primary-container'
+              }`}>
+              {saved ? '✓ Changes Saved' : 'Save Changes'}
+            </button>
+          </div>
+        </form>
       </div>
 
       {/* Password */}
@@ -77,27 +99,27 @@ const ProfileDetails = () => {
           <span className="material-symbols-outlined text-secondary">lock</span>
           <h2 className="font-bold text-gray-900">Change Password</h2>
         </div>
-        <div className="px-5 py-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[
-            { label: 'Current Password', key: 'current' },
-            { label: 'New Password',     key: 'newPw'   },
-            { label: 'Confirm Password', key: 'confirm' },
-          ].map(({ label, key }) => (
-            <div key={key} className={key === 'current' ? 'sm:col-span-2' : ''}>
-              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">{label}</label>
-              <input type="password" value={pwForm[key]} onChange={e => setPwForm(f => ({ ...f, [key]: e.target.value }))}
-                className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent" />
+        <form onSubmit={handleSubmitPw(onPwSubmit)}>
+          <div className="px-5 py-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="sm:col-span-2">
+              <Field label="Current Password" name="current" register={registerPw} validation={{ required: "Required" }} type="password" error={pwErrors.current} />
             </div>
-          ))}
-        </div>
-        <div className="px-5 pb-5">
-          <button onClick={() => { setPwSaved(true); setTimeout(() => setPwSaved(false), 2500); }}
-            className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${
-              pwSaved ? 'bg-green-500 text-white' : 'bg-primary text-white hover:bg-primary-container'
-            }`}>
-            {pwSaved ? '✓ Password Updated' : 'Update Password'}
-          </button>
-        </div>
+            <Field label="New Password" name="newPw" register={registerPw} validation={{ required: "Required", minLength: { value: 6, message: "Min 6 chars" } }} type="password" error={pwErrors.newPw} />
+            <Field label="Confirm Password" name="confirm" register={registerPw} 
+              validation={{ 
+                required: "Required", 
+                validate: value => value === newPw || "Passwords mismatch" 
+              }} type="password" error={pwErrors.confirm} />
+          </div>
+          <div className="px-5 pb-5">
+            <button type="submit"
+              className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${
+                pwSaved ? 'bg-green-500 text-white' : 'bg-primary text-white hover:bg-primary-container'
+              }`}>
+              {pwSaved ? '✓ Password Updated' : 'Update Password'}
+            </button>
+          </div>
+        </form>
       </div>
 
       {/* Delete Account */}

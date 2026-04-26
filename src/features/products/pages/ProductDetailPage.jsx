@@ -4,8 +4,7 @@ import useProductDetail from '../hooks/useProductDetail';
 import ProductGallery from '../components/productDetails/ProductGallery';
 import ProductInfo from '../components/productDetails/ProductInfo';
 import ProductAccordions from '../components/productDetails/ProductAccordions';
-import AIReviewSummary from '../components/productDetails/AIReviewSummary';
-import CuratorVoice from '../components/productDetails/CuratorVoice';
+import CuratorVoice from '../components/productDetails/BazarioVoice';
 import RelatedProducts from '../components/productDetails/RelatedProducts';
 import { Helmet } from 'react-helmet-async';
 
@@ -69,8 +68,7 @@ const ProductDetailPage = () => {
         </div>
       </section>
 
-      {/* AI Review Summary */}
-      <AIReviewSummary summary={product.reviewSummary} />
+      
 
       {/* Complete the Wardrobe & Related Silhouettes */}
       <RelatedProducts

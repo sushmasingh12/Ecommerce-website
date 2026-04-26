@@ -113,9 +113,9 @@ const SignUp = () => {
               <div className="ml-2">
                 <label htmlFor="terms" className="block text-[10px] uppercase tracking-widest text-gray-500 font-label font-bold leading-tight">
                   I agree to the{' '}
-                  <a href="#" className="text-black hover:underline">
+                  <Link to="#" className="text-black hover:underline">
                     Terms and Conditions
-                  </a>
+                  </Link>
                 </label>
                 {errors.terms && <p className="mt-1 text-[9px] text-red-600 uppercase tracking-widest font-bold">{errors.terms.message}</p>}
               </div>

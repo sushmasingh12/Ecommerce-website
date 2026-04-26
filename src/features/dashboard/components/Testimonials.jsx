@@ -8,27 +8,27 @@ const REVIEWS = [
 ];
 
 const Testimonials = () => (
-  <section className="py-12 bg-gray-50">
+  <section className="py-12 bg-surface-variant">
     <div className="max-w-350 mx-auto px-4 md:px-8">
-      <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-6 text-center" style={{ fontFamily: 'Sora, sans-serif' }}>
+      <h2 className="font-headline text-xl md:text-2xl font-bold text-on-surface mb-6 text-center">
         ⭐ What Our Customers Say
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {REVIEWS.map((r) => (
-          <div key={r.name} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-all">
+          <div key={r.name} className="bg-surface rounded-xl p-5 shadow-sm border border-outline hover:shadow-md transition-all">
             <div className="flex gap-0.5 mb-3">
               {Array.from({ length: r.rating }).map((_, i) => (
                 <span key={i} className="text-secondary text-sm">★</span>
               ))}
             </div>
-            <p className="text-gray-600 text-sm leading-relaxed mb-4">"{r.text}"</p>
+            <p className="font-body text-on-surface-variant text-sm leading-relaxed mb-4">"{r.text}"</p>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">
+              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary text-xs font-bold">
                 {r.name[0]}
               </div>
               <div>
-                <p className="text-sm font-semibold text-gray-900">{r.name}</p>
-                <p className="text-[10px] text-gray-400">{r.city}</p>
+                <p className="font-label text-sm font-semibold text-on-surface">{r.name}</p>
+                <p className="font-label text-[10px] text-on-surface-variant">{r.city}</p>
               </div>
             </div>
           </div>

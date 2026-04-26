@@ -20,8 +20,6 @@ const JournalPage = lazy(() => import('../features/footer/editorial/JournalPage'
 const ContactPage = lazy(() => import('../features/footer/support/ContactPage'));
 const ShippingPage = lazy(() => import('../features/footer/support/ShippingPage'));
 const ReturnsPage = lazy(() => import('../features/footer/support/ReturnsPage'));
-const BoutiquesPage = lazy(() => import('../features/footer/support/BoutiquesPage'));
-const AppointmentsPage = lazy(() => import('../features/footer/support/AppointmentsPage'));
 const Settings = lazy(() => import('../features/account/pages/Settings'));
 const HelpSupport = lazy(() => import('../features/account/pages/Helpsupport '));
 const SignIn = lazy(() => import('../features/auth/pages/SignIn'));
@@ -85,8 +83,6 @@ const router = createBrowserRouter(
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/shipping" element={<ShippingPage />} />
             <Route path="/returns" element={<ReturnsPage />} />
-            <Route path="/boutiques" element={<BoutiquesPage />} />
-            <Route path="/appointments" element={<AppointmentsPage />} />
             <Route path="*" element={<NotFound />} />
         </Route>
     )

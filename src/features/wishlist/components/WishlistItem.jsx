@@ -27,7 +27,7 @@ const WishlistItem = ({ item, index }) => {
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3 className="font-label font-bold text-xs uppercase tracking-wider mb-1">{item.name}</h3>
-          <p className="font-serif italic text-sm text-on-surface-variant">{item.brand}</p>
+          <p className="font-serif  text-sm text-on-surface-variant">{item.brand}</p>
         </div>
         <p className="font-label text-xs tracking-wider">{item.price}</p>
       </div>

@@ -135,7 +135,7 @@ const CartPage = () => {
                     </div>
 
                     <div className="mt-2 text-blue-700 text-sm font-medium">
-                      <span className="bg-blue-700 text-white px-1 italic font-bold mr-2">
+                      <span className="bg-blue-700 text-white px-1  font-bold mr-2">
                         WOW!
                       </span>
                       Buy at {formatPrice(Math.max(item.price - 50, 0))}

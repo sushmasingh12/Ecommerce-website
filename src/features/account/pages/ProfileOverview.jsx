@@ -85,7 +85,7 @@ const ProfileOverview = () => {
               {defaultAddr.city}, {defaultAddr.state} - {defaultAddr.pincode}
             </p>
           ) : (
-            <p className="text-sm text-gray-400 italic">No address saved.</p>
+            <p className="text-sm text-gray-400 ">No address saved.</p>
           )}
         </div>
 
@@ -108,7 +108,7 @@ const ProfileOverview = () => {
               </div>
             </div>
           ) : (
-            <p className="text-sm text-gray-400 italic">No payment method saved.</p>
+            <p className="text-sm text-gray-400 ">No payment method saved.</p>
           )}
         </div>
       </div>

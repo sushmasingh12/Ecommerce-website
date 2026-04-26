@@ -14,7 +14,7 @@ const LoadingScreen = () => {
         </div>
       </div>
       
-      <p className="mt-6 font-serif italic text-xs tracking-[0.3em] text-gray-400 uppercase animate-pulse">
+      <p className="mt-6 font-serif  text-xs tracking-[0.3em] text-gray-400 uppercase animate-pulse">
         Bazario
       </p>
     </div>

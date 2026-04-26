@@ -115,7 +115,7 @@ const ProductsPage = ({ category: propCategory }) => {
                 ))
               ) : (
                 <div className="col-span-full py-40 text-center">
-                   <p className="font-serif italic text-xl text-on-surface/50">No pieces match your current filters.</p>
+                   <p className="font-serif text-xl text-on-surface/50">No pieces match your current filters.</p>
                    <button 
                      onClick={() => window.location.reload()}
                      className="mt-6 text-xs uppercase tracking-widest text-primary hover:underline"

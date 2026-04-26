@@ -37,7 +37,7 @@ const WardrobeCard = ({ product }) => (
     <h3 className="text-xs font-bold uppercase tracking-widest mb-1 line-clamp-1">
       {product.name}
     </h3>
-    <p className="text-sm font-serif italic text-secondary">
+    <p className="text-sm font-serif  text-secondary">
       {formatPrice(product.price)}
     </p>
   </Link>
@@ -55,7 +55,7 @@ const RelatedGridItem = ({ product }) => (
     <h4 className="text-[10px] uppercase tracking-widest font-bold line-clamp-1">
       {product.name}
     </h4>
-    <p className="text-xs font-serif italic text-secondary">
+    <p className="text-xs font-serif  text-secondary">
       {formatPrice(product.price)}
     </p>
   </Link>

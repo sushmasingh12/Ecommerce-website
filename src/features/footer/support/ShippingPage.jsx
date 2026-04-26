@@ -1,11 +1,37 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SHIPPING_TABLE = [
-  { method: "Standard Delivery",   time: "4–7 Business Days", cost: "FREE on orders ₹499+", cost2: "₹49 below ₹499" },
-  { method: "Express Delivery",    time: "2–3 Business Days", cost: "₹99",                  cost2: "₹99 flat" },
-  { method: "One-Day Delivery",    time: "Next Business Day",  cost: "₹199",                 cost2: "Selected cities only" },
-  { method: "Same-Day Delivery",   time: "Within 6–8 hours",  cost: "₹249",                 cost: "Metro cities only" },
-  { method: "COD (Cash on Delivery)", time: "Standard time",  cost: "₹40 handling fee",     cost2: "Orders up to ₹10,000" },
+  {
+    method: "Standard Delivery",
+    time: "4–7 Business Days",
+    cost: "FREE on orders ₹499+",
+    cost2: "₹49 below ₹499",
+  },
+  {
+    method: "Express Delivery",
+    time: "2–3 Business Days",
+    cost: "₹99",
+    cost2: "₹99 flat",
+  },
+  {
+    method: "One-Day Delivery",
+    time: "Next Business Day",
+    cost: "₹199",
+    cost2: "Selected cities only",
+  },
+  {
+    method: "Same-Day Delivery",
+    time: "Within 6–8 hours",
+    cost: "₹249",
+    cost2: "Metro cities only",
+  },
+  {
+    method: "COD (Cash on Delivery)",
+    time: "Standard time",
+    cost: "₹40 handling fee",
+    cost2: "Orders up to ₹10,000",
+  },
 ];
 
 const STEPS = [
@@ -146,11 +172,11 @@ const ShippingPage = () => {
             <p className="text-sm text-gray-600 leading-relaxed mb-4">
               Once dispatched, you'll receive an SMS and email with your tracking link. You can also track from <strong>My Orders</strong> in your account.
             </p>
-            <a href="/account/orders"
+            <Link to="/account/orders"
               className="inline-flex items-center gap-2 text-sm font-bold text-[#131921] border border-gray-200 px-4 py-2.5 rounded-lg hover:bg-gray-50 transition-all">
               <span className="material-symbols-outlined text-base">open_in_new</span>
               Go to My Orders
-            </a>
+            </Link>
           </div>
 
           {/* International */}

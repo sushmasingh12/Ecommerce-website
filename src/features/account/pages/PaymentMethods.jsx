@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 import { selectPayments, addPayment, removePayment, setDefaultPayment } from '../store/accountSlice';
 import AccountLayout from './Accountlayout';
 
@@ -42,22 +43,28 @@ const PaymentMethods = () => {
   const payments = useSelector(selectPayments);
   const [tab, setTab]         = useState('upi');
   const [showForm, setShowForm] = useState(false);
-  const [upiId, setUpiId]     = useState('');
-  const [card, setCard]       = useState({ brand: '', last4: '', expiry: '', cardType: 'Visa Debit' });
+
+  const { register: registerUpi, handleSubmit: handleSubmitUpi, reset: resetUpi, formState: { errors: upiErrors } } = useForm({
+    defaultValues: { upiId: '' }
+  });
+
+  const { register: registerCard, handleSubmit: handleSubmitCard, reset: resetCard, formState: { errors: cardErrors } } = useForm({
+    defaultValues: { brand: '', last4: '', expiry: '', cardType: 'Visa Debit' }
+  });
 
   const handleRemove  = id => { if (window.confirm('Remove this payment method?')) dispatch(removePayment(id)); };
   const handleDefault = id => dispatch(setDefaultPayment(id));
 
-  const handleAddUpi = () => {
-    if (!upiId.trim()) return;
-    dispatch(addPayment({ type: 'upi', label: 'UPI', upiId, isDefault: false }));
-    setUpiId(''); setShowForm(false);
+  const onAddUpi = (data) => {
+    dispatch(addPayment({ type: 'upi', label: 'UPI', upiId: data.upiId, isDefault: false }));
+    resetUpi();
+    setShowForm(false);
   };
 
-  const handleAddCard = () => {
-    if (!card.last4 || !card.expiry) return;
-    dispatch(addPayment({ ...card, type: 'card', isDefault: false }));
-    setCard({ brand: '', last4: '', expiry: '', cardType: 'Visa Debit' }); setShowForm(false);
+  const onAddCard = (data) => {
+    dispatch(addPayment({ ...data, type: 'card', isDefault: false }));
+    resetCard();
+    setShowForm(false);
   };
 
   return (
@@ -93,41 +100,40 @@ const PaymentMethods = () => {
               </div>
 
               {tab === 'upi' ? (
-                <div>
+                <form onSubmit={handleSubmitUpi(onAddUpi)}>
                   <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1.5">UPI ID</label>
-                  <input value={upiId} onChange={e => setUpiId(e.target.value)} placeholder="yourname@upi"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white mb-3" />
+                  <input {...registerUpi('upiId', { required: "Required" })} placeholder="yourname@upi"
+                    className={`w-full border rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white mb-3 ${upiErrors.upiId ? 'border-red-500' : 'border-gray-200'}`} />
                   <div className="flex gap-2">
-                    <button onClick={handleAddUpi} className="px-5 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-container transition-all">Add UPI</button>
-                    <button onClick={() => setShowForm(false)} className="px-5 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50">Cancel</button>
+                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-container transition-all">Add UPI</button>
+                    <button type="button" onClick={() => setShowForm(false)} className="px-5 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50">Cancel</button>
                   </div>
-                </div>
+                </form>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <form onSubmit={handleSubmitCard(onAddCard)} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
-                    { label: 'Card Number (last 4 digits)', key: 'last4', placeholder: '1234' },
-                    { label: 'Expiry (MM/YY)', key: 'expiry', placeholder: '08/27' },
-                    { label: 'Bank / Issuer Name', key: 'brand', placeholder: 'HDFC Bank' },
-                  ].map(({ label, key, placeholder }) => (
+                    { label: 'Card Number (last 4 digits)', key: 'last4', placeholder: '1234', required: true },
+                    { label: 'Expiry (MM/YY)', key: 'expiry', placeholder: '08/27', required: true },
+                    { label: 'Bank / Issuer Name', key: 'brand', placeholder: 'HDFC Bank', required: true },
+                  ].map(({ label, key, placeholder, required }) => (
                     <div key={key}>
                       <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">{label}</label>
-                      <input value={card[key]} placeholder={placeholder}
-                        onChange={e => setCard(c => ({ ...c, [key]: e.target.value }))}
-                        className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white" />
+                      <input {...registerCard(key, { required: required ? "Required" : false })} placeholder={placeholder}
+                        className={`w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white ${cardErrors[key] ? 'border-red-500' : 'border-gray-200'}`} />
                     </div>
                   ))}
                   <div>
                     <label className="block text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1">Card Type</label>
-                    <select value={card.cardType} onChange={e => setCard(c => ({ ...c, cardType: e.target.value }))}
+                    <select {...registerCard('cardType')}
                       className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-secondary bg-white">
                       {['Visa Debit','Mastercard Debit','Visa Credit','Mastercard Credit','RuPay'].map(t => <option key={t}>{t}</option>)}
                     </select>
                   </div>
                   <div className="sm:col-span-2 flex gap-2 mt-1">
-                    <button onClick={handleAddCard} className="px-5 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-container transition-all">Add Card</button>
-                    <button onClick={() => setShowForm(false)} className="px-5 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50">Cancel</button>
+                    <button type="submit" className="px-5 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary-container transition-all">Add Card</button>
+                    <button type="button" onClick={() => setShowForm(false)} className="px-5 py-2 border border-gray-200 text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50">Cancel</button>
                   </div>
-                </div>
+                </form>
               )}
             </div>
           )}
