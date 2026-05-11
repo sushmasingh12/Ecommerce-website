@@ -1,0 +1,48 @@
+import React from 'react';
+
+const ShippingAddress = () => {
+  return (
+    <section className="bg-surface-container-lowest rounded-lg p-8 shadow-sm border border-outline-variant/10">
+      <div className="flex items-center gap-3 mb-6">
+        <span className="material-symbols-outlined text-primary">local_shipping</span>
+        <h2 className="text-xl font-bold tracking-tight text-on-surface">Shipping Address</h2>
+      </div>
+      <div className="grid grid-cols-12 gap-6">
+        <div className="flex flex-col gap-2 col-span-12">
+          <label className="font-sans font-medium text-[11px] uppercase tracking-wider text-on-secondary-container">Street Address</label>
+          <input 
+            className="bg-surface-container-low border-none rounded-md px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-outline/50 outline-none" 
+            placeholder="123 Precision Way" 
+            type="text"
+          />
+        </div>
+        <div className="flex flex-col gap-2 col-span-5">
+          <label className="font-sans font-medium text-[11px] uppercase tracking-wider text-on-secondary-container">City</label>
+          <input 
+            className="bg-surface-container-low border-none rounded-md px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-outline/50 outline-none" 
+            placeholder="Metropolis" 
+            type="text"
+          />
+        </div>
+        <div className="flex flex-col gap-2 col-span-4">
+          <label className="font-sans font-medium text-[11px] uppercase tracking-wider text-on-secondary-container">State / Province</label>
+          <input 
+            className="bg-surface-container-low border-none rounded-md px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-outline/50 outline-none" 
+            placeholder="New York" 
+            type="text"
+          />
+        </div>
+        <div className="flex flex-col gap-2 col-span-3">
+          <label className="font-sans font-medium text-[11px] uppercase tracking-wider text-on-secondary-container">Pincode</label>
+          <input 
+            className="bg-surface-container-low border-none rounded-md px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-outline/50 outline-none" 
+            placeholder="10001" 
+            type="text"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ShippingAddress;
