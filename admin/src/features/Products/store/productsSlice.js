@@ -1,242 +1,239 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { productsService } from "../services/productsService";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import * as productService from '../services/productService';
 
-// ── Thunks ───────────────────────────────────────────────
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
-  async (params, { rejectWithValue }) => {
+// ── Helper ────────────────────────────────────────────────────
+const formatINR = (amount) =>
+  new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(amount);
+
+const mapProduct = (p) => ({
+  ...p,
+  id: p._id,
+  name: p.title,
+  price: formatINR(p.basePrice),
+  image: p.images?.[0]?.url || null,
+  stockStatus:
+    p.stock > 10 ? 'IN STOCK' : p.stock > 0 ? 'LOW STOCK' : 'OUT OF STOCK',
+});
+
+// ── Async Thunks ──────────────────────────────────────────────
+export const fetchAdminProducts = createAsyncThunk(
+  'products/fetchProducts',
+  async (filters, thunkAPI) => {
     try {
-      return await productsService.fetchProducts(params);
-    } catch (err) {
-      return rejectWithValue(err.message);
+      return await productService.getAdminProducts(filters);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-  },
+  }
+);
+// Alias so existing code using fetchProducts still works
+export const fetchProducts = fetchAdminProducts;
+
+export const addProduct = createAsyncThunk(
+  'products/addProduct',
+  async (productData, thunkAPI) => {
+    try {
+      // Step 1: Images alag karo
+      const { images, ...rest } = productData;
+
+      // Step 2: Pehle product create karo (JSON, no images)
+      const result = await productService.createProduct(rest);
+      const productId = result.product._id;
+
+      // Step 3: Agar images hain toh Cloudinary pe upload karo
+      if (images && images.length > 0) {
+        const files = images
+          .map((img) => img.file)   // { id, url, file } se sirf File nikalo
+          .filter(Boolean);         // null/undefined skip
+
+        if (files.length > 0) {
+          await productService.uploadProductImages(productId, files);
+        }
+      }
+
+      return result;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
 );
 
-export const fetchQuickStats = createAsyncThunk(
-  "products/fetchQuickStats",
-  async (_, { rejectWithValue }) => {
+export const updateProduct = createAsyncThunk(
+  'products/updateProduct',
+  async ({ id, data }, thunkAPI) => {
     try {
-      return await productsService.fetchQuickStats();
-    } catch (err) {
-      return rejectWithValue(err.message);
+      return await productService.updateProduct(id, data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-  },
-);
-
-export const fetchAIInsight = createAsyncThunk(
-  "products/fetchAIInsight",
-  async (_, { rejectWithValue }) => {
-    try {
-      return await productsService.fetchAIInsight();
-    } catch (err) {
-      return rejectWithValue(err.message);
-    }
-  },
+  }
 );
 
 export const deleteProduct = createAsyncThunk(
-  "products/deleteProduct",
-  async (id, { rejectWithValue }) => {
+  'products/deleteProduct',
+  async (id, thunkAPI) => {
     try {
-      return await productsService.deleteProduct(id);
-    } catch (err) {
-      return rejectWithValue(err.message);
+      await productService.deleteProduct(id);
+      return id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-  },
+  }
 );
 
-export const addProduct = createAsyncThunk(
-  "products/addProduct",
-  async (productData, { rejectWithValue }) => {
+export const fetchQuickStats = createAsyncThunk(
+  'products/fetchQuickStats',
+  async (_, thunkAPI) => {
     try {
-      return await productsService.addProduct(productData);
-    } catch (err) {
-      return rejectWithValue(err.message);
+      return await productService.getAdminProducts({ limit: 1000 }).then((res) => {
+        const products = res.products;
+        return {
+          totalActive: products.filter((p) => p.status === 'Active').length,
+          lowStock: products.filter((p) => p.stock > 0 && p.stock <= 10).length,
+          avgRating:
+            products.length > 0
+              ? (products.reduce((s, p) => s + (p.ratings || 0), 0) / products.length).toFixed(1)
+              : '—',
+        };
+      });
+    } catch {
+      return { totalActive: 0, lowStock: 0, avgRating: '—' };
     }
-  },
+  }
 );
-// ── Slice ─────────────────────────────────────────────────
+
+export const fetchAIInsight = createAsyncThunk('products/fetchAIInsight', async () => {
+  // Placeholder – replace with real AI endpoint when available
+  return {
+    title: 'Restock recommended for Accessories.',
+    description:
+      'Based on current sales velocity, your <strong>Bags & Watches</strong> category has seen a 35% surge this week. Consider restocking before the weekend.',
+    cta: 'Apply Recommendation',
+  };
+});
+
+// ── Slice ─────────────────────────────────────────────────────
 const initialState = {
   items: [],
   total: 0,
   totalPages: 1,
-
-  // Filters
   filters: {
-    search: "",
-    category: "All",
-    status: "All",
     page: 1,
+    search: '',
+    category: 'All',
+    status: 'All',
   },
-
-  // Selection
   selectedIds: [],
-
-  // Sidebar data
   quickStats: null,
   aiInsight: null,
-
   loading: {
     products: false,
+    submitting: false,
     quickStats: false,
     aiInsight: false,
-    deleting: false,
-    submitting: null,
   },
   error: {
     products: null,
-    quickStats: null,
-    aiInsight: null,
-    deleting: null,
     submitting: null,
   },
-
   submitSuccess: false,
 };
 
 const productsSlice = createSlice({
-  name: "products",
+  name: 'products',
   initialState,
   reducers: {
-    setSearch(state, action) {
-      state.filters.search = action.payload;
-      state.filters.page = 1;
-    },
-    setCategory(state, action) {
-      state.filters.category = action.payload;
-      state.filters.page = 1;
-    },
-    setStatus(state, action) {
-      state.filters.status = action.payload;
-      state.filters.page = 1;
-    },
-    setPage(state, action) {
-      state.filters.page = action.payload;
-    },
-    toggleSelectProduct(state, action) {
-      const id = action.payload;
-      const idx = state.selectedIds.indexOf(id);
-      if (idx === -1) state.selectedIds.push(id);
-      else state.selectedIds.splice(idx, 1);
-    },
-    toggleSelectAll(state, action) {
-      // action.payload = all current page ids
-      const allIds = action.payload;
-      const allSelected = allIds.every((id) => state.selectedIds.includes(id));
-      if (allSelected) {
-        state.selectedIds = state.selectedIds.filter(
-          (id) => !allIds.includes(id),
-        );
+    setSearch: (state, { payload }) => { state.filters.search = payload; state.filters.page = 1; },
+    setCategory: (state, { payload }) => { state.filters.category = payload; state.filters.page = 1; },
+    setStatus: (state, { payload }) => { state.filters.status = payload; state.filters.page = 1; },
+    setPage: (state, { payload }) => { state.filters.page = payload; },
+    toggleSelectProduct: (state, { payload: id }) => {
+      if (state.selectedIds.includes(id)) {
+        state.selectedIds = state.selectedIds.filter((i) => i !== id);
       } else {
-        allIds.forEach((id) => {
-          if (!state.selectedIds.includes(id)) state.selectedIds.push(id);
-        });
+        state.selectedIds.push(id);
       }
     },
-    clearSelection(state) {
-      state.selectedIds = [];
+    toggleSelectAll: (state, { payload: ids }) => {
+      state.selectedIds =
+        state.selectedIds.length === ids.length ? [] : ids;
     },
-    clearErrors(state) {
-      state.error = initialState.error;
+    clearSelection: (state) => { state.selectedIds = []; },
+    resetSubmit: (state) => {
+      state.submitSuccess = false;
+      state.error.submitting = null;
     },
-    resetSubmit(state) {
-  state.submitSuccess = false;
-  state.error.submitting = null;
-},
   },
   extraReducers: (builder) => {
-    // fetchProducts
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      // ── Fetch Products ────────────────────────────
+      .addCase(fetchAdminProducts.pending, (state) => {
         state.loading.products = true;
         state.error.products = null;
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
+      .addCase(fetchAdminProducts.fulfilled, (state, { payload }) => {
         state.loading.products = false;
-        state.items = action.payload.products;
-        state.total = action.payload.total;
-        state.totalPages = action.payload.totalPages;
+        state.items = (payload.products || []).map(mapProduct);
+        state.total = payload.productsCount ?? payload.count ?? 0;
+        state.totalPages = Math.max(1, Math.ceil(state.total / 10));
       })
-      .addCase(fetchProducts.rejected, (state, action) => {
+      .addCase(fetchAdminProducts.rejected, (state, { payload }) => {
         state.loading.products = false;
-        state.error.products = action.payload;
-      });
+        state.error.products = payload;
+      })
 
-    // fetchQuickStats
-    builder
-      .addCase(fetchQuickStats.pending, (state) => {
-        state.loading.quickStats = true;
-      })
-      .addCase(fetchQuickStats.fulfilled, (state, action) => {
-        state.loading.quickStats = false;
-        state.quickStats = action.payload;
-      })
-      .addCase(fetchQuickStats.rejected, (state, action) => {
-        state.loading.quickStats = false;
-        state.error.quickStats = action.payload;
-      });
-
-    // fetchAIInsight
-    builder
-      .addCase(fetchAIInsight.pending, (state) => {
-        state.loading.aiInsight = true;
-      })
-      .addCase(fetchAIInsight.fulfilled, (state, action) => {
-        state.loading.aiInsight = false;
-        state.aiInsight = action.payload;
-      })
-      .addCase(fetchAIInsight.rejected, (state, action) => {
-        state.loading.aiInsight = false;
-        state.error.aiInsight = action.payload;
-      });
-
-    // deleteProduct — optimistic removal
-    builder
-      .addCase(deleteProduct.pending, (state) => {
-        state.loading.deleting = true;
-      })
-      .addCase(deleteProduct.fulfilled, (state, action) => {
-        state.loading.deleting = false;
-        state.items = state.items.filter((p) => p.id !== action.payload.id);
-        state.selectedIds = state.selectedIds.filter(
-          (id) => id !== action.payload.id,
-        );
-      })
-      .addCase(deleteProduct.rejected, (state, action) => {
-        state.loading.deleting = false;
-        state.error.deleting = action.payload;
-      });
-
-    builder
-      .addCase(addProduct.pending, (state) => {
-        state.loading.submitting = true;
-        state.error.submitting = null;
-        state.submitSuccess = false;
-      })
-      .addCase(addProduct.fulfilled, (state, action) => {
+      // ── Add Product ──────────────────────────────
+      .addCase(addProduct.pending, (state) => { state.loading.submitting = true; })
+      .addCase(addProduct.fulfilled, (state) => { state.loading.submitting = false; state.submitSuccess = true; })
+      .addCase(addProduct.rejected, (state, { payload }) => {
         state.loading.submitting = false;
-        state.submitSuccess = true;
-        // Optimistically add to list
-        state.items.unshift(action.payload.product);
+        state.error.submitting = payload;
       })
-      .addCase(addProduct.rejected, (state, action) => {
+
+      // ── Update Product ───────────────────────────
+      .addCase(updateProduct.pending, (state) => { state.loading.submitting = true; })
+      .addCase(updateProduct.fulfilled, (state, { payload }) => {
         state.loading.submitting = false;
-        state.error.submitting = action.payload;
-      });
+        const updated = mapProduct(payload.product);
+        const idx = state.items.findIndex((p) => p.id === updated.id);
+        if (idx !== -1) state.items[idx] = updated;
+      })
+      .addCase(updateProduct.rejected, (state, { payload }) => {
+        state.loading.submitting = false;
+        state.error.submitting = payload;
+      })
+
+      // ── Delete Product ───────────────────────────
+      .addCase(deleteProduct.fulfilled, (state, { payload: id }) => {
+        state.items = state.items.filter((p) => p.id !== id);
+        state.total = Math.max(0, state.total - 1);
+      })
+
+      // ── Quick Stats ──────────────────────────────
+      .addCase(fetchQuickStats.pending, (state) => { state.loading.quickStats = true; })
+      .addCase(fetchQuickStats.fulfilled, (state, { payload }) => {
+        state.loading.quickStats = false;
+        state.quickStats = payload;
+      })
+      .addCase(fetchQuickStats.rejected, (state) => { state.loading.quickStats = false; })
+
+      // ── AI Insight ───────────────────────────────
+      .addCase(fetchAIInsight.pending, (state) => { state.loading.aiInsight = true; })
+      .addCase(fetchAIInsight.fulfilled, (state, { payload }) => {
+        state.loading.aiInsight = false;
+        state.aiInsight = payload;
+      })
+      .addCase(fetchAIInsight.rejected, (state) => { state.loading.aiInsight = false; });
   },
 });
 
 export const {
-  setSearch,
-  setCategory,
-  setStatus,
-  setPage,
-  toggleSelectProduct,
-  toggleSelectAll,
-  clearSelection,
-  clearErrors,
-  resetSubmit
+  setSearch, setCategory, setStatus, setPage,
+  toggleSelectProduct, toggleSelectAll, clearSelection, resetSubmit,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;

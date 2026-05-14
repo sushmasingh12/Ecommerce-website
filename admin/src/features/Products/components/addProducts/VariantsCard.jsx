@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const VariantGroup = ({ label, items, onRemove, onAdd, placeholder })=> {
+const VariantGroup = ({ label, items, onRemove, onAdd, placeholder }) => {
   const [input, setInput] = useState("");
 
   const handleAdd = () => {
@@ -51,7 +51,7 @@ const VariantGroup = ({ label, items, onRemove, onAdd, placeholder })=> {
   );
 }
 
-const VariantsCard =({ form, onAddColor, onRemoveColor, onAddSize, onRemoveSize }) => {
+const VariantsCard = ({ form, onAddColor, onRemoveColor, onAddSize, onRemoveSize, onAddMaterial, onRemoveMaterial }) => {
   return (
     <section className="bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-outline-variant/10">
       <div className="flex items-center justify-between mb-8">
@@ -75,11 +75,18 @@ const VariantsCard =({ form, onAddColor, onRemoveColor, onAddSize, onRemoveSize 
           placeholder="Add color..."
         />
         <VariantGroup
-          label="Storage Size"
+          label="Size"
           items={form.sizes}
           onAdd={onAddSize}
           onRemove={onRemoveSize}
           placeholder="Add size..."
+        />
+        <VariantGroup
+          label="Material"
+          items={form.materials}
+          onAdd={onAddMaterial}
+          onRemove={onRemoveMaterial}
+          placeholder="Add material..."
         />
       </div>
     </section>

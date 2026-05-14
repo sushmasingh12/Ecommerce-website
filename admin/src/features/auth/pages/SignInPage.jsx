@@ -67,18 +67,7 @@ export default function SignInPage() {
               isLoading={isLoading}
             />
 
-            <div className="mt-8 text-center">
-              <p className="text-sm text-on-surface-variant">
-                Don&apos;t have an account?
-                <button
-                  type="button"
-                  onClick={() => navigate("/signup")}
-                  className="text-primary font-semibold hover:underline decoration-2 underline-offset-4 ml-1"
-                >
-                  Sign Up
-                </button>
-              </p>
-            </div>
+            {/* Signup removed as per requirements */}
           </div>
         </div>
       </main>

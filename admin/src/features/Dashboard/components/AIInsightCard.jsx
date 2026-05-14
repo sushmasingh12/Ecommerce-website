@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const AIInsightCard = ({ insight, loading = false }) =>{
+const AIInsightCard = ({ insight, loading = false }) => {
   if (loading) {
     return (
       <div className="p-6 rounded-xl border border-primary/20 bg-gradient-to-br from-white to-secondary-container/20 animate-pulse">
@@ -33,8 +33,8 @@ const AIInsightCard = ({ insight, loading = false }) =>{
         dangerouslySetInnerHTML={{ __html: insight.message }}
       />
 
-      
-        <Link Link
+
+      <Link
         onClick={(e) => e.preventDefault()}
         className="text-primary font-bold text-xs flex items-center gap-1 hover:underline"
       >
@@ -45,4 +45,4 @@ const AIInsightCard = ({ insight, loading = false }) =>{
   );
 }
 
-export default  AIInsightCard
+export default AIInsightCard

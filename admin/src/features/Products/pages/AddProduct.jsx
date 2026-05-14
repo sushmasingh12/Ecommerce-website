@@ -1,6 +1,7 @@
 import AddProductHeader from "../components/addProducts/AddProductHeader";
 import GeneralInfoCard from "../components/addProducts/GeneralInfoCard";
 import MediaCard from "../components/addProducts/MediaCard";
+import DetailsCard from "../components/addProducts/DetailsCard";
 import OrganizationCard from "../components/addProducts/OrganizationCard";
 import PricingInventoryCard from "../components/addProducts/PricingInventoryCard";
 import SEOPreviewCard from "../components/addProducts/SEOPreviewCard";
@@ -16,6 +17,8 @@ const AddProduct = () =>{
     errors,
     tagInput,
     setTagInput,
+    highlightInput,
+    setHighlightInput,
     submitting,
     submitError,
     setField,
@@ -25,8 +28,12 @@ const AddProduct = () =>{
     removeColor,
     addSize,
     removeSize,
+    addMaterial,
+    removeMaterial,
     addTag,
     removeTag,
+    addHighlight,
+    removeHighlight,
     addImages,
     removeImage,
     handlePublish,
@@ -66,12 +73,22 @@ const AddProduct = () =>{
             onAdd={addImages}
             onRemove={removeImage}
           />
+          <DetailsCard
+            form={form}
+            setField={setField}
+            highlightInput={highlightInput}
+            setHighlightInput={setHighlightInput}
+            onAddHighlight={addHighlight}
+            onRemoveHighlight={removeHighlight}
+          />
           <VariantsCard
             form={form}
             onAddColor={addColor}
             onRemoveColor={removeColor}
             onAddSize={addSize}
             onRemoveSize={removeSize}
+            onAddMaterial={addMaterial}
+            onRemoveMaterial={removeMaterial}
           />
         </div>
 

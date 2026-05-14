@@ -1,4 +1,4 @@
-const GeneralInfoCard = ({ form, errors, setField }) =>{
+const GeneralInfoCard = ({ form, errors, setField }) => {
   return (
     <section className="bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-outline-variant/10">
       {/* Header */}
@@ -11,32 +11,46 @@ const GeneralInfoCard = ({ form, errors, setField }) =>{
 
       <div className="space-y-6">
         {/* Title */}
-        <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-widest text-on-secondary-container">
-            Product Title
-          </label>
-          <input
-            type="text"
-            value={form.title}
-            onChange={(e) => setField("title", e.target.value)}
-            placeholder="e.g. Zenit-M Digital Rangefinder Camera"
-            className={`w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary/10 outline-none transition-all ${
-              errors.title ? "ring-2 ring-error/40" : ""
-            }`}
-          />
-          {errors.title && (
-            <p className="text-xs text-error font-medium mt-1">{errors.title}</p>
-          )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="text-xs font-bold uppercase tracking-widest text-on-secondary-container">
+              Product Title
+            </label>
+            <input
+              type="text"
+              value={form.title}
+              onChange={(e) => setField("title", e.target.value)}
+              placeholder="e.g. Zenit-M Digital Rangefinder Camera"
+              className={`w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary/10 outline-none transition-all ${errors.title ? "ring-2 ring-error/40" : ""
+                }`}
+            />
+            {errors.title && (
+              <p className="text-xs text-error font-medium mt-1">{errors.title}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-bold uppercase tracking-widest text-on-secondary-container">
+              Sub-description / Tagline
+            </label>
+            <input
+              type="text"
+              value={form.subdesc}
+              onChange={(e) => setField("subdesc", e.target.value)}
+              placeholder="e.g. Limited Edition Craftsmanship"
+              className="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary/10 outline-none transition-all"
+            />
+          </div>
         </div>
 
-        {/* Description */}
+        {/* short Description */}
         <div className="space-y-2">
           <label className="text-xs font-bold uppercase tracking-widest text-on-secondary-container">
-            Description
+            Short Description
           </label>
           <div className="border border-outline-variant/15 rounded-xl overflow-hidden bg-surface-container-low">
             {/* Mini Toolbar */}
-            <div className="flex items-center gap-2 p-3 bg-white/50 border-b border-outline-variant/10">
+            {/* <div className="flex items-center gap-2 p-3 bg-white/50 border-b border-outline-variant/10">
               {["format_bold", "format_italic", "format_list_bulleted", "link", "image"].map(
                 (icon, i) => (
                   <span key={icon}>
@@ -49,7 +63,7 @@ const GeneralInfoCard = ({ form, errors, setField }) =>{
                   </span>
                 )
               )}
-            </div>
+            </div> */}
             <textarea
               value={form.description}
               onChange={(e) => setField("description", e.target.value)}
@@ -59,6 +73,7 @@ const GeneralInfoCard = ({ form, errors, setField }) =>{
             />
           </div>
         </div>
+
       </div>
     </section>
   );

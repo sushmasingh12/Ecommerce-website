@@ -16,8 +16,8 @@ const ProductInfo = ({
 
   if (!product) return null;
 
-  const isInCart = cartItems.some(item => 
-    item.id === product.id && 
+  const isInCart = cartItems.some(item =>
+    item.id === product.id &&
     item.variant.includes(selectedColor?.name || product.color) &&
     item.variant.includes(selectedSize || 'Standard')
   );
@@ -118,41 +118,39 @@ const ProductInfo = ({
 
           {/* Action Buttons */}
           {/* Action Buttons */}
-<div className="pt-6 max-w-sm">
-  <div className="flex flex-col sm:flex-row gap-3">
-    <button
-      onClick={handleAddToBag}
-      className={`flex-1 min-h-13 px-6 rounded-full text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 flex items-center justify-center ${
-        isInCart
-          ? 'bg-primary text-on-primary shadow-md'
-          : 'bg-primary text-on-primary hover:opacity-90 hover:shadow-md'
-      }`}
-    >
-      <span className="flex items-center justify-center gap-2">
-        <span className="material-symbols-outlined text-[18px]">
-          {isInCart ? 'shopping_bag' : 'add_shopping_cart'}
-        </span>
-        {isInCart ? 'Go to Cart' : 'Add to Bag'}
-      </span>
-    </button>
+          <div className="pt-6 max-w-sm">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={handleAddToBag}
+                className={`flex-1 min-h-13 px-6 rounded-full text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 flex items-center justify-center ${isInCart
+                  ? 'bg-primary text-on-primary shadow-md'
+                  : 'bg-primary text-on-primary hover:opacity-90 hover:shadow-md'
+                  }`}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  <span className="material-symbols-outlined text-[18px]">
+                    {isInCart ? 'shopping_bag' : 'add_shopping_cart'}
+                  </span>
+                  {isInCart ? 'Go to Cart' : 'Add to Bag'}
+                </span>
+              </button>
 
-    <button
-      onClick={handleWishlist}
-      className={`flex-1 min-h-13 px-6 rounded-full border text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 flex items-center justify-center ${
-        loved
-          ? 'bg-secondary border-secondary text-white shadow-sm'
-          : 'border-outline-variant bg-white text-on-surface hover:border-primary hover:bg-surface-container-low'
-      }`}
-    >
-      <span className="flex items-center justify-center gap-2">
-        <span className={`material-symbols-outlined text-[18px] ${loved ? 'fill-1' : ''}`}>
-          favorite
-        </span>
-        {loved ? 'In Wishlist' : 'Wishlist'}
-      </span>
-    </button>
-  </div>
-</div>
+              <button
+                onClick={handleWishlist}
+                className={`flex-1 min-h-13 px-6 rounded-full border text-[11px] sm:text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 flex items-center justify-center ${loved
+                  ? 'bg-secondary border-secondary text-white shadow-sm'
+                  : 'border-outline-variant bg-white text-on-surface hover:border-primary hover:bg-surface-container-low'
+                  }`}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  <span className={`material-symbols-outlined text-[18px] ${loved ? 'fill-1' : ''}`}>
+                    favorite
+                  </span>
+                  {loved ? 'In Wishlist' : 'Wishlist'}
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

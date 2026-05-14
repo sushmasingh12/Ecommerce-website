@@ -12,22 +12,43 @@ import PromotionsPage from '../features/Promotions/pages/PromotionsPage';
 import CustomersPage from '../features/Customers/pages/CustomersPage';
 import AIInsightsPage from '../features/AITools/pages/AIInsightsPage';
 import SignInPage from '../features/auth/pages/SignInPage';
-import SignUpPage from '../features/auth/pages/SignUpPage';
-import VerifyEmailPage from '../features/auth/pages/VerifyEmailPage';
 import ReviewsPage from '../features/Reviews/pages/ReviewsPage';
 import AnalyticsPage from '../features/Analytics/pages/AnalyticsPage';
 import AddProduct from '../features/Products/pages/AddProduct';
+import ProductDetailsPage from '../features/Products/pages/ProductDetailsPage';
+import EditProductPage from '../features/Products/pages/EditProductPage';
+import AdminListPage from '../features/AdminManagement/pages/AdminListPage';
+
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMeThunk, selectIsInitialized, selectUser } from '../features/auth/store/authSlice';
+
+const ProtectedRoute = ({ children }) => {
+  const user = useSelector(selectUser);
+  const isInitialized = useSelector(selectIsInitialized);
+
+  if (!isInitialized) return null; // Or a loading spinner
+  if (!user) return <Navigate to="/signin" replace />;
+
+  return children;
+};
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
        <Route path="/" element={<Navigate to="/signin" replace />} />
-      <Route path="/signup" element={<SignUpPage />} />
       <Route path="/signin" element={<SignInPage />} />
-      <Route path="/verify_Email" element={<VerifyEmailPage />} />
-      <Route element={<Layout/>}>
+      <Route element={
+        <ProtectedRoute>
+          <Layout/>
+        </ProtectedRoute>
+      }>
       <Route path='/dashboard' element={<DashboardPage/>}/>
+      <Route path='/admins' element={<AdminListPage/>}/>
+      <Route path='/product/view/:id' element={<ProductDetailsPage/>}/>
+      <Route path='/product/edit/:id' element={<EditProductPage/>}/>
       <Route path='/products' element={<Products/>}/>
-      <Route path='/products/addrpoduct' element={<AddProduct/>}/>
+      <Route path='/products/add' element={<AddProduct/>}/>
       <Route path='/orders' element={<OrdersPage/>}/>
       <Route path='/orders/create' element={<CreateOrderPage/>}/>
       <Route path='/orders/:id' element={<OrderDetailsPage/>}/>

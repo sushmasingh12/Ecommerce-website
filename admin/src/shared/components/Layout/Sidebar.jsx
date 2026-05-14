@@ -1,5 +1,6 @@
-// Sidebar.jsx
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../features/auth/store/authSlice";
 
 const navItems = [
   { icon: "dashboard", label: "Dashboard", path: "/dashboard" },
@@ -11,9 +12,15 @@ const navItems = [
   { icon: "analytics", label: "Analytics", path: "/analytics" },
   { icon: "loyalty", label: "Promotions", path: "/promotions" },
   { icon: "auto_awesome", label: "AI Tools", path: "/ai-tools" },
+  { icon: "admin_panel_settings", label: "Admins", path: "/admins", role: "super_admin" },
 ];
 
 const Sidebar = () => {
+  const user = useSelector(selectUser);
+  const userRole = user?.role;
+
+  const filteredNavItems = navItems.filter(item => !item.role || item.role === userRole);
+
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 bg-slate-50 border-r border-slate-200 flex flex-col p-4 z-40">
       {/* Logo */}
@@ -37,8 +44,8 @@ const Sidebar = () => {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 flex flex-col gap-1">
-        {navItems.map(({ icon, label, path }) => (
+      <nav className="flex-1 flex flex-col gap-1 overflow-y-auto custom-scrollbar">
+        {filteredNavItems.map(({ icon, label, path }) => (
           <NavLink
             key={label}
             to={path}

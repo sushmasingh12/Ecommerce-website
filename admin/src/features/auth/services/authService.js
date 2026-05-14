@@ -1,55 +1,39 @@
-const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1';
 
-export const signupUser = async (payload) => {
-  await wait(1200);
+// credentials: 'include' — httpOnly cookie automatically har request ke saath bheja jaata hai
+const apiFetch = async (endpoint, options = {}) => {
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json', ...options.headers },
+    ...options,
+  });
 
-  return {
-    success: true,
-    message: "Signup successful. Verification code sent.",
-    user: {
-      id: Date.now(),
-      fullName: payload.fullName,
-      email: payload.email,
-      phone: payload.phone,
-    },
-    email: payload.email,
-    verificationRequired: true,
-  };
-};
+  const data = await response.json();
 
-export const verifyEmailOtp = async ({ email, otp }) => {
-  await wait(1000);
-
-  if (otp !== "482123") {
-    throw new Error("Invalid code, please try again");
+  if (!response.ok) {
+    throw new Error(data.message || 'Request failed.');
   }
 
-  return {
-    success: true,
-    message: "Email verified successfully.",
-    email,
-  };
+  return data;
 };
 
-export const resendOtp = async (email) => {
-  await wait(1000);
-
-  return {
-    success: true,
-    message: `A new verification code was sent to ${email}`,
-  };
+// ─── Authentication ───────────────────────────────────────────────────────────
+export const fetchMe = async () => {
+  return apiFetch('/auth/me');
 };
 
+// ─── Signin ───────────────────────────────────────────────────────────────────
 export const signinUser = async (payload) => {
-  await wait(1000);
+  const data = await apiFetch('/auth/signin', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
 
-  return {
-    success: true,
-    message: "Signed in successfully.",
-    user: {
-      id: 101,
-      email: payload.email,
-      role: "admin",
-    },
-  };
+  // Cookie automatically set ho jaati hai — localStorage ki zaroorat nahi
+  return { ...data, user: data.admin };
+};
+
+// ─── Signout ──────────────────────────────────────────────────────────────────
+export const signoutUser = async () => {
+  return apiFetch('/auth/signout', { method: 'POST' });
 };

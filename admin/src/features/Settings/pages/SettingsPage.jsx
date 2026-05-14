@@ -5,9 +5,12 @@ import ShippingSection from "../components/ShippingSection";
 import StoreProfileSection from "../components/StoreProfileSection";
 import TeamSection from "../components/TeamSection";
 import { useSettings } from "../hooks/useSettings";
+import { useDispatch } from "react-redux";
+import { signoutThunk } from "../../auth/store/authSlice";
 
 
 const SettingsPage = () => {
+  const dispatch = useDispatch();
   const {
     storeProfile,
     notifications,
@@ -25,6 +28,12 @@ const SettingsPage = () => {
     handleCurrencyChange,
     handleSave,
   } = useSettings();
+
+  const handleLogout = () => {
+    if (window.confirm("Are you sure you want to sign out?")) {
+      dispatch(signoutThunk());
+    }
+  };
 
   if (status === "loading" || status === "idle") {
     return (
@@ -92,6 +101,25 @@ const SettingsPage = () => {
             onToggleSmartTax={handleToggleSmartTax}
             onCurrencyChange={handleCurrencyChange}
           />
+
+          {/* Account Actions Section */}
+          <section className="p-8 rounded-2xl bg-error/5 border border-error/10">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold text-error">Account Session</h2>
+                <p className="text-sm text-on-surface-variant mt-1">
+                  End your current administrative session and secure your account.
+                </p>
+              </div>
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-6 py-3 bg-error text-on-error rounded-xl font-bold shadow-lg shadow-error/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
+                <span className="material-symbols-outlined text-xl">logout</span>
+                Sign Out
+              </button>
+            </div>
+          </section>
         </div>
       </div>
     </main>

@@ -10,6 +10,8 @@ import settingsReducer from "../features/Settings/store/settingsSlice";
 import promotionsReducer from "../features/Promotions/store/promotionsSlice";
 import reviewsReducer from "../features/Reviews/store/reviewsSlice";
 import analyticsReducer from "../features/Analytics/store/analyticsSlice";
+import adminManagementReducer from "../features/AdminManagement/store/adminManagementSlice";
+
 export const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -22,6 +24,7 @@ export const store = configureStore({
     settings: settingsReducer,
     promotions: promotionsReducer,
     reviews: reviewsReducer,
-    analytics:analyticsReducer,
+    analytics: analyticsReducer,
+    adminManagement: adminManagementReducer,
   },
 });

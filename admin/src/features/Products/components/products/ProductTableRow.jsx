@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const stockStyles = {
   "IN STOCK":   { dot: "bg-emerald-500", badge: "bg-emerald-100 text-emerald-700" },
   "LOW STOCK":  { dot: "bg-amber-500",   badge: "bg-amber-100 text-amber-700" },
@@ -93,17 +95,23 @@ const ProductTableRow =({
       {/* Actions */}
       <td className="py-4 px-6 text-right">
         <div className="flex items-center justify-end gap-1 ">
-          <button className="p-2 hover:bg-surface-container-high rounded-lg text-secondary transition-colors">
+          <Link 
+            to={`/product/view/${product.id}`}
+            className="p-2 hover:bg-surface-container-high rounded-lg text-secondary transition-colors"
+          >
+            <span className="material-symbols-outlined text-lg">visibility</span>
+          </Link>
+          <Link 
+            to={`/product/edit/${product.id}`}
+            className="p-2 hover:bg-surface-container-high rounded-lg text-secondary transition-colors"
+          >
             <span className="material-symbols-outlined text-lg">edit</span>
-          </button>
+          </Link>
           <button
             onClick={() => onDelete(product.id)}
             className="p-2 hover:bg-error-container hover:text-error rounded-lg text-secondary transition-colors"
           >
             <span className="material-symbols-outlined text-lg">delete</span>
-          </button>
-          <button className="p-2 hover:bg-surface-container-high rounded-lg text-secondary transition-colors">
-            <span className="material-symbols-outlined text-lg">more_vert</span>
           </button>
         </div>
       </td>
