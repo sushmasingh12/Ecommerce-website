@@ -1,11 +1,19 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
-const MediaCard = ({ images, onAdd, onRemove }) => {
+const MediaCard = ({ images, onAdd, onAddByUrl, onRemove }) => {
   const inputRef = useRef();
+  const [urlInput, setUrlInput] = useState("");
 
   const handleDrop = (e) => {
     e.preventDefault();
     onAdd(e.dataTransfer.files);
+  };
+
+  const handleAddUrl = () => {
+    if (urlInput) {
+      onAddByUrl(urlInput);
+      setUrlInput("");
+    }
   };
 
   return (
@@ -23,6 +31,28 @@ const MediaCard = ({ images, onAdd, onRemove }) => {
         <span className="text-[10px] font-bold uppercase tracking-widest text-on-secondary-container">
           {images.length}/10 Images
         </span>
+      </div>
+
+      {/* URL Input */}
+      <div className="flex gap-3 mb-6 p-1.5 bg-surface-container rounded-2xl border border-outline-variant/10 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+        <div className="flex-1 flex items-center gap-3 px-3">
+          <span className="material-symbols-outlined text-outline-variant">link</span>
+          <input
+            type="text"
+            placeholder="Paste image URL here..."
+            className="flex-1 bg-transparent border-none outline-none text-sm py-2"
+            value={urlInput}
+            onChange={(e) => setUrlInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAddUrl()}
+          />
+        </div>
+        <button
+          type="button"
+          onClick={handleAddUrl}
+          className="px-6 py-2 bg-primary text-on-primary text-xs font-bold rounded-xl shadow-sm hover:bg-primary-container transition-all"
+        >
+          Add URL
+        </button>
       </div>
 
       {/* Dropzone */}

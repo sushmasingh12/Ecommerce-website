@@ -1,4 +1,6 @@
+import axios from 'axios';
 import Product from './product_model.js';
+import { uploadToCloudinary } from './product_upload.js';
 
 const DEFAULT_PER_PAGE = 10;
 
@@ -187,4 +189,80 @@ export const getQuickStats = async () => {
         lowStock,
         avgRating: ratingResult[0]?.avg?.toFixed(1) ?? '—',
     };
+};
+
+// ══════════════════════════════════════════════════════════════
+//  BULK CREATE
+// ══════════════════════════════════════════════════════════════
+export const bulkCreateProducts = async (productsArray, userId, imagesMap = {}) => {
+    // Process each product data
+    const processedProducts = [];
+
+    for (const p of productsArray) {
+        const data = { ...p };
+        data.user = userId;
+
+        // Auto-generate SEO URL from title if not provided
+        if (!data.seoUrl && data.title) {
+            data.seoUrl = data.title
+                .toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '');
+        }
+
+        // Handle array fields if they are strings (comma separated)
+        ['colors', 'sizes', 'materials', 'tags', 'highlights'].forEach(field => {
+            if (typeof data[field] === 'string') {
+                data[field] = data[field].split(',').map(s => s.trim()).filter(s => s !== '');
+            }
+        });
+
+        // Handle images if provided as URLs or filenames (ZIP)
+        if (typeof data.images === 'string' && data.images.trim() !== '') {
+            const identifiers = data.images.split(',').map(item => item.trim()).filter(item => item !== '');
+            const uploadedImages = [];
+
+            for (const id of identifiers) {
+                try {
+                    let buffer;
+                    let result;
+
+                    // 1. Check if it's a local file in imagesMap
+                    if (imagesMap[id]) {
+                        buffer = imagesMap[id];
+                        result = await uploadToCloudinary(buffer, { folder: 'bazario/bulk' });
+                    } 
+                    // 2. Otherwise treat as URL
+                    else if (id.startsWith('http')) {
+                        const response = await axios.get(id, { responseType: 'arraybuffer' });
+                        buffer = Buffer.from(response.data, 'binary');
+                        result = await uploadToCloudinary(buffer, { folder: 'bazario/bulk' });
+                    }
+
+                    if (result) {
+                        uploadedImages.push({
+                            public_id: result.public_id,
+                            url: result.secure_url
+                        });
+                    }
+                } catch (error) {
+                    console.error(`Bulk Upload: Failed to upload image ${id}`, error.message);
+                }
+            }
+            data.images = uploadedImages;
+        }
+
+        // Handle numeric fields
+        ['basePrice', 'discount', 'stock'].forEach(field => {
+            if (data[field] !== undefined && data[field] !== '') {
+                data[field] = Number(data[field]);
+            }
+        });
+
+        processedProducts.push(data);
+    }
+
+    // Use insertMany for efficiency
+    const products = await Product.insertMany(processedProducts, { ordered: false });
+    return products;
 };

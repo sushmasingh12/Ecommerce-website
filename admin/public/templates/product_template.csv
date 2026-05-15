@@ -1,0 +1,3 @@
+title,description,basePrice,discount,sku,stock,category,subcategory,brand,gender,colors,sizes,materials,tags,highlights,images
+Example Product,This is a high-quality product.,999,10,SKU001,50,men,Shirts,Bazario,Men,"Red, Blue","M, L, XL",Cotton,"New, Trending","Premium Fabric, Breathable","https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg"
+Another Item,Stylish and comfortable.,1499,15,SKU002,100,women,Top,Bazario,Women,"Black, White","S, M",Silk,"Summer, Casual","Soft Material, Elegant Design","https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg"

@@ -46,12 +46,24 @@ export const addProduct = createAsyncThunk(
 
       // Step 3: Agar images hain toh Cloudinary pe upload karo
       if (images && images.length > 0) {
+        // Files processing
         const files = images
-          .map((img) => img.file)   // { id, url, file } se sirf File nikalo
-          .filter(Boolean);         // null/undefined skip
+          .map((img) => img.file)
+          .filter(Boolean);
 
         if (files.length > 0) {
           await productService.uploadProductImages(productId, files);
+        }
+
+        // URLs processing
+        const urls = images
+          .filter((img) => img.isExternal && img.url)
+          .map((img) => img.url);
+
+        if (urls.length > 0) {
+          await Promise.all(
+            urls.map((url) => productService.uploadProductImageByUrl(productId, url))
+          );
         }
       }
 

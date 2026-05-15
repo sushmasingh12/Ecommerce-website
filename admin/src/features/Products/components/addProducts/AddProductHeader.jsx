@@ -1,4 +1,8 @@
+import React, { useState } from 'react';
+import BulkUploadModal from './BulkUploadModal';
+
 const AddProductHeader = ({ title = "Add New Product", onPublish, onSaveDraft, onCancel, submitting }) => {
+  const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
   return (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
       <div>
@@ -33,6 +37,14 @@ const AddProductHeader = ({ title = "Add New Product", onPublish, onSaveDraft, o
         >
           Cancel
         </button>
+        <button
+          onClick={() => setIsBulkModalOpen(true)}
+          disabled={submitting}
+          className="px-5 py-2.5 text-sm font-medium border border-outline-variant/20 text-on-surface hover:bg-surface-container-high transition-colors rounded-xl disabled:opacity-50 flex items-center gap-2"
+        >
+          <span className="material-symbols-outlined text-[20px]">upload_file</span>
+          Bulk Upload
+        </button>
         {onSaveDraft && (
           <button
             onClick={onSaveDraft}
@@ -53,6 +65,10 @@ const AddProductHeader = ({ title = "Add New Product", onPublish, onSaveDraft, o
           {submitting ? "Publishing…" : "Publish"}
         </button>
       </div>
+      <BulkUploadModal 
+        isOpen={isBulkModalOpen} 
+        onClose={() => setIsBulkModalOpen(false)} 
+      />
     </div>
   );
 };

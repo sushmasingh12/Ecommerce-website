@@ -173,6 +173,17 @@ export function useAddProduct() {
     }));
     setForm((p) => ({ ...p, images: [...p.images, ...newImgs].slice(0, 10) }));
   }, []);
+
+  const addImageByUrl = useCallback((url) => {
+    if (!url.trim()) return;
+    const newImg = {
+      id: `url-${Date.now()}`,
+      url: url.trim(),
+      isExternal: true, // Mark it as an external URL
+    };
+    setForm((p) => ({ ...p, images: [...p.images, newImg].slice(0, 10) }));
+  }, []);
+
   const removeImage = useCallback((id) =>
     setForm((p) => ({ ...p, images: p.images.filter((img) => img.id !== id) })), []);
 
@@ -223,6 +234,7 @@ export function useAddProduct() {
     addHighlight,
     removeHighlight,
     addImages,
+    addImageByUrl,
     removeImage,
     handlePublish,
     handleSaveDraft,

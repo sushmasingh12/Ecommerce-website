@@ -27,11 +27,18 @@ cloudinary.config({
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
-    const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    const allowed = [
+        'image/jpeg', 'image/png', 'image/webp', 'image/gif',
+        'text/csv',
+        'application/vnd.ms-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/zip',
+        'application/x-zip-compressed'
+    ];
     if (allowed.includes(file.mimetype)) {
         cb(null, true);
     } else {
-        cb(new Error('Only JPEG, PNG, WEBP, or GIF images are allowed'), false);
+        cb(new Error('Only images (JPEG, PNG, WEBP, GIF) or bulk files (CSV, XLS, XLSX) are allowed'), false);
     }
 };
 

@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
+const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
 
 // ── Core fetch helper ─────────────────────────────────────────
 const apiFetch = async (endpoint, options = {}) => {
@@ -66,7 +66,16 @@ export const uploadProductImages = async (id, files) => {
   const data = await response.json();
   if (!response.ok) throw new Error(data.message || 'Image upload failed.');
   return data;
+};
 
+/**
+ * POST /admin/product/:id/image-url
+ */
+export const uploadProductImageByUrl = async (id, url) => {
+  return apiFetch(`/admin/product/${id}/image-url`, {
+    method: 'POST',
+    body: JSON.stringify({ url }),
+  });
 };
 
 /** PUT /admin/product/:id */

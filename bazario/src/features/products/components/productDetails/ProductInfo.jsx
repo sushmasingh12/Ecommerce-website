@@ -64,19 +64,27 @@ const ProductInfo = ({
             {product.colors && product.colors.length > 0 && (
               <div className="pt-4 space-y-4">
                 <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-on-surface">
-                  Color: {selectedColor?.name || product.color}
+                  Color: {selectedColor?.name || selectedColor || product.color}
                 </span>
                 <div className="flex gap-4">
-                  {product.colors.map((color) => (
-                    <button
-                      key={color.id}
-                      onClick={() => onColorChange(color)}
-                      className={`w-8 h-8 rounded-full border p-0.5 transition-all ${selectedColor?.id === color.id ? 'border-primary' : 'border-transparent hover:border-outline'
-                        }`}
-                    >
-                      <div className="w-full h-full rounded-full" style={{ backgroundColor: color.hex }}></div>
-                    </button>
-                  ))}
+                  {product.colors.map((color, idx) => {
+                    const isObject = typeof color === 'object';
+                    const name = isObject ? color.name : color;
+                    const hex = isObject ? color.hex : name.toLowerCase(); // fallback to color name as css color
+                    const id = isObject ? color.id : `color-${idx}`;
+                    const isSelected = isObject ? selectedColor?.id === id : selectedColor === color;
+
+                    return (
+                      <button
+                        key={id}
+                        onClick={() => onColorChange(color)}
+                        className={`w-8 h-8 rounded-full border p-0.5 transition-all ${isSelected ? 'border-primary' : 'border-transparent hover:border-outline'
+                          }`}
+                      >
+                        <div className="w-full h-full rounded-full" style={{ backgroundColor: hex }}></div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}

@@ -8,6 +8,8 @@ import {
     uploadProductImages,
     deleteProductImage,
     getProductStats,
+    bulkUploadProducts,
+    uploadProductImageByURL,
 } from './product_controller.js';
 import { protect, restrictTo } from '../auth/auth_middleware.js';
 import { upload } from './product_upload.js';
@@ -29,6 +31,7 @@ router.use(restrictTo('admin', 'super_admin'));
 router.get('/admin/products', getAdminProducts);
 router.get('/admin/products/stats', getProductStats);
 router.post('/admin/product/new', newProduct);
+router.post('/admin/products/bulk-upload', upload.single('file'), bulkUploadProducts);
 
 // Single product CRUD
 router
@@ -47,6 +50,11 @@ router.post(
 router.delete(
     '/admin/product/:id/image/:imageId',
     deleteProductImage
+);
+
+router.post(
+    '/admin/product/:id/image-url',
+    uploadProductImageByURL
 );
 
 export default router;

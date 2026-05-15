@@ -35,6 +35,7 @@ const AddProduct = () =>{
     addHighlight,
     removeHighlight,
     addImages,
+    addImageByUrl,
     removeImage,
     handlePublish,
     handleSaveDraft,
@@ -71,6 +72,7 @@ const AddProduct = () =>{
           <MediaCard
             images={form.images}
             onAdd={addImages}
+            onAddByUrl={addImageByUrl}
             onRemove={removeImage}
           />
           <DetailsCard
